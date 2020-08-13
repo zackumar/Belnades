@@ -176,3 +176,5 @@ class RequestBuilder {
         return new Request(this.scheme, this.host, this.port, this.path, this.headers, this.queryParameters, this.bodyParameters)
     }
 }
+
+export { Request, RequestBuilder }
