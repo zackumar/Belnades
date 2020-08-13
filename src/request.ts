@@ -111,9 +111,9 @@ class RequestBuilder {
     private port: number | undefined
     private path: string | undefined
 
-    private headers: any = {}
-    private queryParameters: any = {}
-    private bodyParameters: any = {}
+    private headers: any
+    private queryParameters: any
+    private bodyParameters: any
 
     public withScheme(scheme: string) {
         this.scheme = scheme
@@ -136,17 +136,17 @@ class RequestBuilder {
     }
 
     public withQueryParameters(queryParams: any) {
-        Object.assign(this.queryParameters, queryParams)
+        this.queryParameters = Object.assign(this.queryParameters || {}, queryParams)
         return this
     }
 
     public withBodyParameters(bodyParams: any) {
-        Object.assign(this.bodyParameters, bodyParams)
+        this.bodyParameters = Object.assign(this.bodyParameters || {}, bodyParams)
         return this
     }
 
     public withHeaders(headers: any) {
-        Object.assign(this.headers, headers)
+        this.headers = Object.assign(this.headers || {}, headers)
         return this
     }
 
@@ -154,6 +154,7 @@ class RequestBuilder {
         if (accessToken) {
             this.withHeaders({ Authorization: `Bearer ${accessToken}` })
         }
+        return this
     }
 
     public build() {
