@@ -22,7 +22,7 @@ function getParamsFromRequest(request) {
     return options;
 }
 function makeRequest(method, uri, options, callback) {
-    var req = superagent_1.default.get.bind(superagent_1.default)(uri);
+    var req = method.bind(superagent_1.default)(uri);
     if (options.query) {
         req.query(options.query);
     }
