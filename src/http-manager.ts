@@ -17,8 +17,8 @@ function getParamsFromRequest(request: Request) {
     return options
 }
 
-function makeRequest(method: any, uri: string, options: any, callback: any) {
-    let req = superagent.get.bind(superagent)(uri)
+function makeRequest(method: Function, uri: string, options: any, callback: CallableFunction) {
+    let req = method.bind(superagent)(uri)
     if (options.query) {
         req.query(options.query)
     }

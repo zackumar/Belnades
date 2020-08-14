@@ -86,7 +86,7 @@ class Request {
         }
     }
 
-    public execute(method: any, callback?: any) {
+    public execute(method: Function, callback?: CallableFunction) {
         if (callback) {
             method(this, callback)
             return

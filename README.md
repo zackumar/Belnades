@@ -1,3 +1,3 @@
 # Belnades
 
-A Spotify Connect Client
+A Spotify API for NodeJS
