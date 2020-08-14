@@ -87,7 +87,7 @@ class Request {
         return
     }
 
-    public execute(method: Function, callback?: Function): Promise<object> | undefined {
+    public execute(method: Function, callback?: Function): any {
         if (callback) {
             method(this, callback)
             return

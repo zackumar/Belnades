@@ -45,14 +45,10 @@ class WebApi {
     public getAlbums(albumIds: string[], options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/albums')
         let ids: string = albumIds.join(',')
-        console.log(ids)
         request.withQueryParameters({ ids: ids })
         if (options) {
             request.withQueryParameters(options)
         }
-
-        let req = request.build()
-        console.log(req.getUrl())
-        return req.execute(get, callback)
+        return request.build().execute(get, callback)
     }
 }
