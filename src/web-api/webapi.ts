@@ -204,15 +204,36 @@ class WebApi {
         let request = webApiBuilder(this.accessToken).withPath('/v1/recommendations/available-genre-seeds')
         return request.build().execute(get, callback)
     }
+
+    //Episodes API Endpoints
+
+    /**
+     * Get Spotify catalog information for a single episode identified by its unique Spotify ID.
+     * @param episodeId The Spotify ID for the episode.
+     * @param options Additional query parameters. (market)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public getEpisode(episodeId: string, options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath(`/v1/episodes/${episodeId}`)
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Get Spotify catalog information for several episodes based on their Spotify IDs.
+     * @param episodeIds A comma-separated list of the Spotify IDs for the episodes. Maximum: 50 IDs.
+     * @param options Additional query parameters. (market)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public getEpisodes(episodeIds: string[], options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/episodes')
+        let ids: string = episodeIds.join(',')
+        request.withQueryParameters({ ids: ids })
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(get, callback)
+    }
 }
-
-;(async () => {
-    let api = new WebApi(
-        'BQDfypGSwJmBKp4xq9wUbXP_Jbae0DE4WkIvCovC7TDP3O1o08q3141IVlks8y1CumsZr_YUCknClEcGv3_TCq3PCRGKlr1a_l4opXx4s11yVtLxq-K70b4WqMMcoXU3MY9XYsgPosEz-uAw4nL6FWUVlsSXDIJpbZfIS0lhkEgYshQj3wQss-X7-J7zOJVGj1ljw7wB-WSe8oLK5OPYRfN_3cUyZclbXOz--iMV2mYFpjdZd7PNRlsmvSUEttDxJ65OcIK2dqhfGmc'
-    )
-
-    let response = await api.getRecommendationGenres()
-    console.log(response.body)
-})()
-
-//'4yvcSjfu4PC0CYQyLy4wSq'
