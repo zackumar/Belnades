@@ -89,10 +89,11 @@ var Request = /** @class */ (function () {
                     return _this.queryParameters[key] !== undefined;
                 })
                     .map(function (key) {
-                    return key + "=" + _this.queryParameters[key];
+                    return key + "=" + encodeURIComponent(_this.queryParameters[key]);
                 })
                     .join('&'));
         }
+        return;
     };
     Request.prototype.execute = function (method, callback) {
         if (callback) {
@@ -133,6 +134,12 @@ var RequestBuilder = /** @class */ (function () {
         this.path = path;
         return this;
     };
+    RequestBuilder.prototype.withAuth = function (accessToken) {
+        if (accessToken) {
+            this.withHeaders({ Authorization: "Bearer " + accessToken });
+        }
+        return this;
+    };
     RequestBuilder.prototype.withQueryParameters = function (queryParams) {
         this.queryParameters = Object.assign(this.queryParameters || {}, queryParams);
         return this;
@@ -143,12 +150,6 @@ var RequestBuilder = /** @class */ (function () {
     };
     RequestBuilder.prototype.withHeaders = function (headers) {
         this.headers = Object.assign(this.headers || {}, headers);
-        return this;
-    };
-    RequestBuilder.prototype.withAuth = function (accessToken) {
-        if (accessToken) {
-            this.withHeaders({ Authorization: "Bearer " + accessToken });
-        }
         return this;
     };
     RequestBuilder.prototype.build = function () {

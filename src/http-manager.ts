@@ -1,7 +1,7 @@
 import superagent from 'superagent'
 import { Request } from './request'
 
-function getParamsFromRequest(request: Request) {
+function getParamsFromRequest(request: Request): object {
     let options: any = {}
     if (request.getQueryParams) {
         options.query = request.getQueryParams
@@ -17,7 +17,7 @@ function getParamsFromRequest(request: Request) {
     return options
 }
 
-function makeRequest(method: Function, uri: string, options: any, callback: CallableFunction) {
+function makeRequest(method: Function, uri: string, options: any, callback: Function) {
     let req = method.bind(superagent)(uri)
     if (options.query) {
         req.query(options.query)
@@ -44,25 +44,25 @@ function makeRequest(method: Function, uri: string, options: any, callback: Call
     })
 }
 
-function get(request: Request, callback: CallableFunction) {
+function get(request: Request, callback: Function) {
     var options = getParamsFromRequest(request)
     var method = superagent.get
     makeRequest(method, request.getUri(), options, callback)
 }
 
-function post(request: Request, callback: CallableFunction) {
+function post(request: Request, callback: Function) {
     var options = getParamsFromRequest(request)
     var method = superagent.post
     makeRequest(method, request.getUri(), options, callback)
 }
 
-function del(request: Request, callback: CallableFunction) {
+function del(request: Request, callback: Function) {
     var options = getParamsFromRequest(request)
     var method = superagent.del
     makeRequest(method, request.getUri(), options, callback)
 }
 
-function put(request: Request, callback: CallableFunction) {
+function put(request: Request, callback: Function) {
     var options = getParamsFromRequest(request)
     var method = superagent.put
     makeRequest(method, request.getUri(), options, callback)

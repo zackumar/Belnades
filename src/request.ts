@@ -8,7 +8,7 @@ class Request {
     private queryParameters: any
     private bodyParameters: any
 
-    constructor(scheme: string, host: string, port: number, path: string, headers: any, queryParams: any, bodyParams: any) {
+    constructor(scheme: string, host: string, port: number, path: string, headers: object, queryParams: object, bodyParams: object) {
         this.scheme = scheme
         this.host = host
         this.port = port
@@ -47,7 +47,7 @@ class Request {
         return this.bodyParameters
     }
 
-    public getUri() {
+    public getUri(): string {
         if (!this.scheme || !this.host || !this.port) {
             throw new Error('Missing required components to constuct URI')
         }
@@ -62,7 +62,7 @@ class Request {
         return uri
     }
 
-    public getUrl() {
+    public getUrl(): string {
         let uri = this.getUri()
         if (this.queryParameters) {
             return uri + this.getQueryParametersAsString()
@@ -70,7 +70,7 @@ class Request {
         return uri
     }
 
-    public getQueryParametersAsString() {
+    public getQueryParametersAsString(): string | undefined {
         if (this.queryParameters) {
             return (
                 '?' +
@@ -79,14 +79,15 @@ class Request {
                         return this.queryParameters[key] !== undefined
                     })
                     .map((key: string) => {
-                        return `${key}=${this.queryParameters[key]}`
+                        return `${key}=${encodeURIComponent(this.queryParameters[key])}`
                     })
                     .join('&')
             )
         }
+        return
     }
 
-    public execute(method: Function, callback?: CallableFunction) {
+    public execute(method: Function, callback?: Function): Promise<object> | undefined {
         if (callback) {
             method(this, callback)
             return
@@ -115,49 +116,49 @@ class RequestBuilder {
     private queryParameters: any
     private bodyParameters: any
 
-    public withScheme(scheme: string) {
+    public withScheme(scheme: string): RequestBuilder {
         this.scheme = scheme
         return this
     }
 
-    public withHost(host: string) {
+    public withHost(host: string): RequestBuilder {
         this.host = host
         return this
     }
 
-    public withPort(port: number) {
+    public withPort(port: number): RequestBuilder {
         this.port = port
         return this
     }
 
-    public withPath(path: string) {
+    public withPath(path: string): RequestBuilder {
         this.path = path
         return this
     }
 
-    public withQueryParameters(queryParams: any) {
-        this.queryParameters = Object.assign(this.queryParameters || {}, queryParams)
-        return this
-    }
-
-    public withBodyParameters(bodyParams: any) {
-        this.bodyParameters = Object.assign(this.bodyParameters || {}, bodyParams)
-        return this
-    }
-
-    public withHeaders(headers: any) {
-        this.headers = Object.assign(this.headers || {}, headers)
-        return this
-    }
-
-    public withAuth(accessToken: string) {
+    public withAuth(accessToken: string): RequestBuilder {
         if (accessToken) {
             this.withHeaders({ Authorization: `Bearer ${accessToken}` })
         }
         return this
     }
 
-    public build() {
+    public withQueryParameters(queryParams: object): RequestBuilder {
+        this.queryParameters = Object.assign(this.queryParameters || {}, queryParams)
+        return this
+    }
+
+    public withBodyParameters(bodyParams: object): RequestBuilder {
+        this.bodyParameters = Object.assign(this.bodyParameters || {}, bodyParams)
+        return this
+    }
+
+    public withHeaders(headers: object): RequestBuilder {
+        this.headers = Object.assign(this.headers || {}, headers)
+        return this
+    }
+
+    public build(): Request {
         if (!this.scheme || !this.host) {
             throw new Error('Missing required components to build request')
         }
