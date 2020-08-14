@@ -25,13 +25,15 @@ class WebApi {
     }
 
     /**
-     * Get Spotify catalog information about an album’s tracks. Optional parameters can be used to limit the number of tracks returned.
-     * @param albumId The Spotify ID for the album.
-     * @param options Additional query parameters.(market, limit, offset)
+     * Get Spotify catalog information for multiple albums identified by their Spotify IDs.
+     * @param albumIds A comma-separated list of the Spotify IDs for the albums. Maximum: 20 IDs.
+     * @param options Additional query parameters. (market)
      * @param callback Optional callback method to use instead of promise.
      */
-    public getAlbumsTracks(albumId: string, options?: object, callback?: Function) {
-        let request = webApiBuilder(this.accessToken).withPath(`/v1/albums/${albumId}/tracks`)
+    public getAlbums(albumIds: string[], options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/albums')
+        let ids: string = albumIds.join(',')
+        request.withQueryParameters({ ids: ids })
         if (options) {
             request.withQueryParameters(options)
         }
@@ -39,15 +41,13 @@ class WebApi {
     }
 
     /**
-     * Get Spotify catalog information for multiple albums identified by their Spotify IDs.
-     * @param albumIds A comma-separated list of the Spotify IDs for the albums. Maximum: 20 IDs.
-     * @param options Additional query parameters.(market)
+     * Get Spotify catalog information about an album’s tracks. Optional parameters can be used to limit the number of tracks returned.
+     * @param albumId The Spotify ID for the album.
+     * @param options Additional query parameters. (market, limit, offset)
      * @param callback Optional callback method to use instead of promise.
      */
-    public getAlbums(albumIds: string[], options?: object, callback?: Function) {
-        let request = webApiBuilder(this.accessToken).withPath('/v1/albums')
-        let ids: string = albumIds.join(',')
-        request.withQueryParameters({ ids: ids })
+    public getAlbumsTracks(albumId: string, options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath(`/v1/albums/${albumId}/tracks`)
         if (options) {
             request.withQueryParameters(options)
         }
@@ -93,7 +93,7 @@ class WebApi {
     /**
      * Get Spotify catalog information about an artist’s albums. Optional parameters can be specified in the query string to filter and sort the response.
      * @param artistId The Spotify ID for the artist.
-     * @param options Additional query parameters.(include_groups, market, limit, offset)
+     * @param options Additional query parameters. (include_groups, market, limit, offset)
      * @param callback Optional callback method to use instead of promise.
      */
     public getArtistsAlbums(artistId: string, options?: object, callback?: Function) {
@@ -119,7 +119,7 @@ class WebApi {
     /**
      * Get a single category used to tag items in Spotify (on, for example, the Spotify player’s “Browse” tab).
      * @param categoryId The Spotify category ID for the category.
-     * @param options Additional query parameters.(market, locale)
+     * @param options Additional query parameters. (market, locale)
      * @param callback Optional callback method to use instead of promise.
      */
     public getCategory(categoryId: string, options?: object, callback?: Function) {
@@ -132,7 +132,7 @@ class WebApi {
 
     /**
      * Get a list of categories used to tag items in Spotify (on, for example, the Spotify player’s “Browse” tab).
-     * @param options Additional query parameters.(market, locale, limit, offset)
+     * @param options Additional query parameters. (market, locale, limit, offset)
      * @param callback Optional callback method to use instead of promise.
      */
     public getCategories(options?: object, callback?: Function) {
@@ -146,7 +146,7 @@ class WebApi {
     /**
      * Get a list of Spotify playlists tagged with a particular category.
      * @param categoryId The Spotify category ID for the category.
-     * @param options Additional query parameters.(market, limit, offset)
+     * @param options Additional query parameters. (market, limit, offset)
      * @param callback Optional callback method to use instead of promise.
      */
     public getCategoryPlaylists(categoryId: string, options?: object, callback?: Function) {
@@ -159,7 +159,7 @@ class WebApi {
 
     /**
      * Get a list of Spotify featured playlists (shown, for example, on a Spotify player’s ‘Browse’ tab).
-     * @param options Additional query parameters.(locale, market, timestamp, limit, offset)
+     * @param options Additional query parameters. (locale, market, timestamp, limit, offset)
      * @param callback Optional callback method to use instead of promise.
      */
     public getFeaturedPlaylists(options?: object, callback?: Function) {
@@ -185,7 +185,7 @@ class WebApi {
 
     /**
      * Create a playlist-style listening experience based on seed artists, tracks and genres.
-     * @param options Additional query parameters. See {@link https://developer.spotify.com/documentation/web-api/reference/browse/get-recommendations/} for options
+     * @param options Additional query parameters. See {@link https://developer.spotify.com/documentation/web-api/reference/browse/get-recommendations/} for options.
      * @param callback Optional callback method to use instead of promise.
      */
     public getRecommendations(options?: object, callback?: Function) {
@@ -205,3 +205,14 @@ class WebApi {
         return request.build().execute(get, callback)
     }
 }
+
+;(async () => {
+    let api = new WebApi(
+        'BQDfypGSwJmBKp4xq9wUbXP_Jbae0DE4WkIvCovC7TDP3O1o08q3141IVlks8y1CumsZr_YUCknClEcGv3_TCq3PCRGKlr1a_l4opXx4s11yVtLxq-K70b4WqMMcoXU3MY9XYsgPosEz-uAw4nL6FWUVlsSXDIJpbZfIS0lhkEgYshQj3wQss-X7-J7zOJVGj1ljw7wB-WSe8oLK5OPYRfN_3cUyZclbXOz--iMV2mYFpjdZd7PNRlsmvSUEttDxJ65OcIK2dqhfGmc'
+    )
+
+    let response = await api.getRecommendationGenres()
+    console.log(response.body)
+})()
+
+//'4yvcSjfu4PC0CYQyLy4wSq'
