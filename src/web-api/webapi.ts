@@ -14,7 +14,7 @@ class WebApi {
      * Get Spotify catalog information for a single album.
      * @param albumId The Spotify ID for the album.
      * @param options Additional query parameters. (market)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getAlbum(albumId: string, options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath(`/v1/albums/${albumId}`)
@@ -28,7 +28,7 @@ class WebApi {
      * Get Spotify catalog information for multiple albums identified by their Spotify IDs.
      * @param albumIds A comma-separated list of the Spotify IDs for the albums. Maximum: 20 IDs.
      * @param options Additional query parameters. (market)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getAlbums(albumIds: string[], options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/albums')
@@ -44,7 +44,7 @@ class WebApi {
      * Get Spotify catalog information about an album’s tracks. Optional parameters can be used to limit the number of tracks returned.
      * @param albumId The Spotify ID for the album.
      * @param options Additional query parameters. (market, limit, offset)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getAlbumsTracks(albumId: string, options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath(`/v1/albums/${albumId}/tracks`)
@@ -59,7 +59,7 @@ class WebApi {
     /**
      * Get Spotify catalog information for a single artist identified by their unique Spotify ID.
      * @param artistId The Spotify ID for the artist.
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getArtist(artistId: string, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath(`/v1/artists/${artistId}`)
@@ -69,7 +69,7 @@ class WebApi {
     /**
      * Get Spotify catalog information for several artists based on their Spotify IDs.
      * @param artistIds A comma-separated list of the Spotify IDs for the artists. Maximum: 50 IDs.
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getArtists(artistIds: string[], callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/artists')
@@ -82,7 +82,7 @@ class WebApi {
      * Get Spotify catalog information about an artist’s top tracks by market.
      * @param artistId The Spotify ID for the artist.
      * @param market An ISO 3166-1 alpha-2 market code or the string from_token.
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getArtistsTopTracks(artistId: string, market: string, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath(`/v1/artists/${artistId}/top-tracks`)
@@ -94,7 +94,7 @@ class WebApi {
      * Get Spotify catalog information about an artist’s albums. Optional parameters can be specified in the query string to filter and sort the response.
      * @param artistId The Spotify ID for the artist.
      * @param options Additional query parameters. (include_groups, market, limit, offset)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getArtistsAlbums(artistId: string, options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath(`/v1/artists/${artistId}/albums`)
@@ -107,7 +107,7 @@ class WebApi {
     /**
      * Get Spotify catalog information about artists similar to a given artist. Similarity is based on analysis of the Spotify community’s listening history.
      * @param artistId The Spotify ID for the artist.
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getArtistsRelatedArtists(artistId: string, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath(`/v1/artists/${artistId}/related-artists`)
@@ -120,7 +120,7 @@ class WebApi {
      * Get a single category used to tag items in Spotify (on, for example, the Spotify player’s “Browse” tab).
      * @param categoryId The Spotify category ID for the category.
      * @param options Additional query parameters. (market, locale)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getCategory(categoryId: string, options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath(`/v1/browse/categories/${categoryId}`)
@@ -133,7 +133,7 @@ class WebApi {
     /**
      * Get a list of categories used to tag items in Spotify (on, for example, the Spotify player’s “Browse” tab).
      * @param options Additional query parameters. (market, locale, limit, offset)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getCategories(options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/browse/categories')
@@ -147,7 +147,7 @@ class WebApi {
      * Get a list of Spotify playlists tagged with a particular category.
      * @param categoryId The Spotify category ID for the category.
      * @param options Additional query parameters. (market, limit, offset)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getCategoryPlaylists(categoryId: string, options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath(`/v1/browse/categories/${categoryId}/playlists`)
@@ -160,7 +160,7 @@ class WebApi {
     /**
      * Get a list of Spotify featured playlists (shown, for example, on a Spotify player’s ‘Browse’ tab).
      * @param options Additional query parameters. (locale, market, timestamp, limit, offset)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getFeaturedPlaylists(options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/browse/featured-playlists')
@@ -173,7 +173,7 @@ class WebApi {
     /**
      * Get a list of new album releases featured in Spotify (shown, for example, on a Spotify player’s “Browse” tab).
      * @param options Additional query parameters. (market, limit, offset)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getNewReleases(options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/browse/new-releases')
@@ -186,7 +186,7 @@ class WebApi {
     /**
      * Create a playlist-style listening experience based on seed artists, tracks and genres.
      * @param options Additional query parameters. See {@link https://developer.spotify.com/documentation/web-api/reference/browse/get-recommendations/} for options.
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getRecommendations(options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/recommendations')
@@ -198,7 +198,7 @@ class WebApi {
 
     /**
      * Retrieve a list of available genres seed parameter values for recommendations.
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getRecommendationGenres(callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/recommendations/available-genre-seeds')
@@ -211,7 +211,7 @@ class WebApi {
      * Get Spotify catalog information for a single episode identified by its unique Spotify ID.
      * @param episodeId The Spotify ID for the episode.
      * @param options Additional query parameters. (market)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getEpisode(episodeId: string, options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath(`/v1/episodes/${episodeId}`)
@@ -225,7 +225,7 @@ class WebApi {
      * Get Spotify catalog information for several episodes based on their Spotify IDs.
      * @param episodeIds A comma-separated list of the Spotify IDs for the episodes. Maximum: 50 IDs.
      * @param options Additional query parameters. (market)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getEpisodes(episodeIds: string[], options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/episodes')
@@ -242,8 +242,10 @@ class WebApi {
     /**
      * Check to see if the current user is following one or more artists or other Spotify users.
      * @param type The ID type: either artist or user.
-     * @param followIds A comma-separated list of the artist or the user Spotify IDs to check. For example: ids=74ASZWbe4lXaubB36ztrGX,08td7MxkoHQkXnWAYD8d6Q. A maximum of 50 IDs can be sent in one request.
-     * @param callback Optional callback method to use instead of promise.
+     * @param followIds A comma-separated list of the artist or the user Spotify IDs to check.<br>
+     *                  For example: ids=74ASZWbe4lXaubB36ztrGX,08td7MxkoHQkXnWAYD8d6Q.<br>
+     *                  A maximum of 50 IDs can be sent in one request.<br>
+     * @param callback
      */
     public getIsFollowingArtistOrUser(type: string, followIds: string[], callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/following/contains')
@@ -259,7 +261,7 @@ class WebApi {
      * Get the current user’s followed artists.
      * @param type The ID type: currently only artist is supported.
      * @param options Additional query parameters. (limit, after)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getFollowedArtistsOrUsers(type: string, options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/following')
@@ -273,8 +275,10 @@ class WebApi {
     /**
      * Add the current user as a follower of one or more artists or other Spotify users.
      * @param type The ID type: either artist or user.
-     * @param followIds A comma-separated list of the artist or the user Spotify IDs. For example: ids=74ASZWbe4lXaubB36ztrGX,08td7MxkoHQkXnWAYD8d6Q. A maximum of 50 IDs can be sent in one request.
-     * @param callback Optional callback method to use instead of promise.
+     * @param followIds A comma-separated list of the artist or the user Spotify IDs.<br>
+     *                  For example: ids=74ASZWbe4lXaubB36ztrGX,08td7MxkoHQkXnWAYD8d6Q.<br>
+     *                  A maximum of 50 IDs can be sent in one request.
+     * @param callback
      */
     public followArtistOrUser(type: string, followIds: string[], callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/following')
@@ -289,8 +293,10 @@ class WebApi {
     /**
      * Remove the current user as a follower of one or more artists or other Spotify users.
      * @param type The ID type: either artist or user.
-     * @param followIds A comma-separated list of the artist or the user Spotify IDs. For example: ids=74ASZWbe4lXaubB36ztrGX,08td7MxkoHQkXnWAYD8d6Q. A maximum of 50 IDs can be sent in one request.
-     * @param callback Optional callback method to use instead of promise.
+     * @param followIds A comma-separated list of the artist or the user Spotify IDs.<br>
+     *                  For example: ids=74ASZWbe4lXaubB36ztrGX,08td7MxkoHQkXnWAYD8d6Q. <br>
+     *                  A maximum of 50 IDs can be sent in one request.
+     * @param callback
      */
     public unfollowArtistOrUser(type: string, followIds: string[], callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/following')
@@ -306,7 +312,7 @@ class WebApi {
      * Check to see if one or more Spotify users are following a specified playlist.
      * @param playlistId The Spotify ID of the playlist.
      * @param userIds A comma-separated list of Spotify User IDs ; the ids of the users that you want to check to see if they follow the playlist. Maximum: 5 ids.
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getIsFollowingPlaylist(playlistId: string, userIds: string[], callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath(`/v1/playlists/${playlistId}/followers/contains`)
@@ -319,7 +325,7 @@ class WebApi {
      * Add the current user as a follower of a playlist.
      * @param playlistId The Spotify ID of the playlist. Any playlist can be followed, regardless of its public/private status, as long as you know its playlist ID.
      * @param isPublic Defaults to true. If true the playlist will be included in user’s public playlists, if false it will remain private. To be able to follow playlists privately, the user must have granted the playlist-modify-private scope.
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public followPlaylist(playlistId: string, isPublic?: boolean, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath(`/v1/playlists/${playlistId}/followers`)
@@ -330,7 +336,7 @@ class WebApi {
     /**
      * Remove the current user as a follower of a playlist.
      * @param playlistId The Spotify ID of the playlist that is to be no longer followed.
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public unfollowPlaylist(playlistId: string, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath(`/v1/playlists/${playlistId}/followers`)
@@ -342,7 +348,7 @@ class WebApi {
     /**
      * Check if one or more albums is already saved in the current Spotify user’s ‘Your Music’ library.
      * @param albumIds A comma-separated list of the Spotify IDs for the albums. Maximum: 50 IDs.
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getIsAlbumsSaved(albumIds: string[], callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/albums/contains')
@@ -354,7 +360,7 @@ class WebApi {
     /**
      * Get a list of the albums saved in the current Spotify user’s ‘Your Music’ library.
      * @param options Additional query parameters. (limit, offset)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getSavedAblums(options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/albums')
@@ -366,8 +372,10 @@ class WebApi {
 
     /**
      * Save one or more albums to the current user’s ‘Your Music’ library.
-     * @param albumIds A comma-separated list of the Spotify IDs. For example: ids=4iV5W9uYEdYUVa79Axb7Rh,1301WleyT98MSxVHPZCA6M. Maximum: 50 IDs.
-     * @param callback Optional callback method to use instead of promise.
+     * @param albumIds A comma-separated list of the Spotify IDs.<br>
+     *                 For example: ids=4iV5W9uYEdYUVa79Axb7Rh,1301WleyT98MSxVHPZCA6M.<br>
+     *                 Maximum: 50 IDs.
+     * @param callback
      */
     public saveAlbums(albumIds: string[], callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/albums')
@@ -378,8 +386,10 @@ class WebApi {
 
     /**
      * Remove one or more albums from the current user’s ‘Your Music’ library.
-     * @param albumIds A comma-separated list of the Spotify IDs. For example: ids=4iV5W9uYEdYUVa79Axb7Rh,1301WleyT98MSxVHPZCA6M. Maximum: 50 IDs.
-     * @param callback Optional callback method to use instead of promise.
+     * @param albumIds A comma-separated list of the Spotify IDs.<br>
+     *                 For example: ids=4iV5W9uYEdYUVa79Axb7Rh,1301WleyT98MSxVHPZCA6M.<br>
+     *                 Maximum: 50 IDs.
+     * @param callback
      */
     public removeSavedAlbums(albumIds: string[], callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/albums')
@@ -391,7 +401,7 @@ class WebApi {
     /**
      * Check if one or more shows is already saved in the current Spotify user’s library.
      * @param showIds A comma-separated list of the Spotify IDs for the shows. Maximum: 50 ids.
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getIsShowsSaved(showIds: string[], callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/shows/contains')
@@ -403,7 +413,7 @@ class WebApi {
     /**
      * Get a list of shows saved in the current Spotify user’s library. Optional parameters can be used to limit the number of shows returned.
      * @param options Additional query parameters. (limit, offset)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getSavedShows(options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/shows')
@@ -416,7 +426,7 @@ class WebApi {
     /**
      * Save one or more shows to current Spotify user’s library.
      * @param showIds A comma-separated list of Spotify IDs for the shows to be added to the user’s library.
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public saveShows(showIds: string[], callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/shows')
@@ -429,7 +439,7 @@ class WebApi {
      * Delete one or more shows from current Spotify user’s library.
      * @param showIds A comma-separated list of Spotify IDs for the shows to be deleted from the user’s library.
      * @param options Additional query parameters. (market)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public removeSavedShows(showIds: string[], options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/shows')
@@ -444,7 +454,7 @@ class WebApi {
     /**
      * Check if one or more tracks is already saved in the current Spotify user’s ‘Your Music’ library.
      * @param trackIds A comma-separated list of the Spotify IDs for the tracks. Maximum: 50 IDs.
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getIsTracksSaved(trackIds: string[], callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/tracks/contains')
@@ -456,7 +466,7 @@ class WebApi {
     /**
      * Get a list of the songs saved in the current Spotify user’s ‘Your Music’ library.
      * @param options Additional query parameters. (market, limit, offset)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getSavedTracks(options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/tracks')
@@ -468,8 +478,10 @@ class WebApi {
 
     /**
      * Save one or more tracks to the current user’s ‘Your Music’ library.
-     * @param trackIds A comma-separated list of the Spotify IDs. For example: ids=4iV5W9uYEdYUVa79Axb7Rh,1301WleyT98MSxVHPZCA6M. Maximum: 50 IDs.
-     * @param callback Optional callback method to use instead of promise.
+     * @param trackIds A comma-separated list of the Spotify IDs.<br>
+     *                 For example: ids=4iV5W9uYEdYUVa79Axb7Rh,1301WleyT98MSxVHPZCA6M.<br>
+     *                 Maximum: 50 IDs.
+     * @param callback
      */
     public saveTracks(trackIds: string[], callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/tracks')
@@ -480,8 +492,10 @@ class WebApi {
 
     /**
      * Remove one or more tracks from the current user’s ‘Your Music’ library.
-     * @param trackIds A comma-separated list of the Spotify IDs. For example: ids=4iV5W9uYEdYUVa79Axb7Rh,1301WleyT98MSxVHPZCA6M. Maximum: 50 IDs.
-     * @param callback Optional callback method to use instead of promise.
+     * @param trackIds A comma-separated list of the Spotify IDs.<br>
+     *                 For example: ids=4iV5W9uYEdYUVa79Axb7Rh,1301WleyT98MSxVHPZCA6M.<br>
+     *                 Maximum: 50 IDs.
+     * @param callback
      */
     public removeSavedTracks(trackIds: string[], callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/tracks')
@@ -496,7 +510,7 @@ class WebApi {
      * Get the current user’s top artists or tracks based on calculated affinity.
      * @param type The type of entity to return. Valid values: artists or tracks.
      * @param options Additional query parameters. (limit, offset, time_range)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getUsersTopTracksAndArtists(type: string, options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath(`/v1/me/top/${type}`)
@@ -512,7 +526,7 @@ class WebApi {
      * Add an item to the end of the user’s current playback queue.
      * @param uri The uri of the item to add to the queue. Must be a track or an episode uri.
      * @param options Additional query parameters. (device_id)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public addItemToQueue(uri: string, options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/queue')
@@ -525,7 +539,7 @@ class WebApi {
 
     /**
      * Get information about a user’s available devices.
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getAvailableDevices(callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/devices')
@@ -535,7 +549,7 @@ class WebApi {
     /**
      * Get information about the user’s current playback state, including track or episode, progress, and active device.
      * @param options Additional query parameters. (market, additional_types)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getCurrentPlaybackInfo(options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/player')
@@ -548,7 +562,7 @@ class WebApi {
     /**
      * Get tracks from the current user’s recently played tracks.
      * @param options Additional query parameters. (limit, after, before)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getRecentlyPlayedTracks(options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/recently-played')
@@ -561,7 +575,7 @@ class WebApi {
     /**
      * Get the object currently being played on the user’s Spotify account.
      * @param options Additional query parameters. (market, additional_types)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public getCurrentlyPlaying(options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/currently-playing')
@@ -574,7 +588,7 @@ class WebApi {
     /**
      * Pause playback on the user’s account.
      * @param options Additional query parameters. (device_id)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public pausePlayback(options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/pause')
@@ -588,7 +602,7 @@ class WebApi {
      * Seeks to the given position in the user’s currently playing track.
      * @param positionMs The position in milliseconds to seek to. Must be a positive number. Passing in a position that is greater than the length of the track will cause the player to start playing the next song.
      * @param options Additional query parameters. (device_id)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public seekInPlayingTrack(positionMs: number, options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/seek')
@@ -601,12 +615,12 @@ class WebApi {
 
     /**
      * Set the repeat mode for the user’s playback. Options are repeat-track, repeat-context, and off.
-     * @param state track, context or off.
-track will repeat the current track.
-context will repeat the current context.
-off will turn repeat off.
+     * @param state track, context or off.<br>
+                    track will repeat the current track.<br>
+                    context will repeat the current context.<br>
+                    off will turn repeat off.<br>
      * @param options Additional query parameters. (device_id)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback 
      */
     public setRepeatState(state: string, options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/repeat')
@@ -621,7 +635,7 @@ off will turn repeat off.
      * Set the volume for the user’s current playback device.
      * @param volume The volume to set. Must be a value from 0 to 100 inclusive.
      * @param options Additional query parameters. (device_id)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public setVolume(volume: number, options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/volume')
@@ -635,7 +649,7 @@ off will turn repeat off.
     /**
      * Skips to next track in the user’s queue.
      * @param options Additional query parameters. (device_id)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public skipToNextPlayback(options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/next')
@@ -648,7 +662,7 @@ off will turn repeat off.
     /**
      * Skips to previous track in the user’s queue.
      * @param options Additional query parameters. (device_id)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public skipToPreviousPlayback(options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/previous')
@@ -662,7 +676,7 @@ off will turn repeat off.
      * Start a new context or resume current playback on the user’s active device.
      * @param queryOptions Additional query parameters. (device_id)
      * @param bodyOptions Additional body parameters. See {@link https://developer.spotify.com/documentation/web-api/reference/player/start-a-users-playback/} for more info. (context_uri, uris, offset, position_ms)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback
      */
     public resumePlayback(queryOptions?: object, bodyOptions?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/play')
@@ -677,10 +691,10 @@ off will turn repeat off.
 
     /**
      * Toggle shuffle on or off for user’s playback.
-     * @param state true : Shuffle user’s playback
-false : Do not shuffle user’s playback.
+     * @param state true : Shuffle user’s playback<br>
+                    false : Do not shuffle user’s playback.<br>
      * @param options Additional query parameters. (device_id)
-     * @param callback Optional callback method to use instead of promise.
+     * @param callback 
      */
     public setShuffleState(state: string | boolean, options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/shuffle')
@@ -693,9 +707,9 @@ false : Do not shuffle user’s playback.
 
     /**
      * Transfer playback to a new device and determine if it should start playing.
-     * @param deviceIds A JSON array containing the ID of the device on which playback should be started/transferred.
-For example:{device_ids:["74ASZWbe4lXaubB36ztrGX"]}
-Note: Although an array is accepted, only a single device_id is currently supported. Supplying more than one will return 400 Bad Request
+     * @param deviceIds A JSON array containing the ID of the device on which playback should be started/transferred.<br>
+                        For example:{device_ids:["74ASZWbe4lXaubB36ztrGX"]}<br>
+                        Note: Although an array is accepted, only a single device_id is currently supported. Supplying more than one will return 400 Bad Request<br>
      * @param options Additional body parameters. (play)
      * @param callback 
      */
