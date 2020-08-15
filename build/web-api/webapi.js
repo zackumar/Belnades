@@ -661,5 +661,183 @@ var WebApi = /** @class */ (function () {
         }
         return request.build().execute(http_manager_1.put, callback);
     };
+    //Playlist API Endpoints
+    /**
+     * Get a playlist owned by a Spotify user.
+     * @param playlistId The Spotify ID for the playlist.
+     * @param options Additional query parameters. (fields, market, additional_types)
+     * @param callback
+     */
+    WebApi.prototype.getPlaylist = function (playlistId, options, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId);
+        if (options) {
+            request.withQueryParameters(options);
+        }
+        return request.build().execute(http_manager_1.get, callback);
+    };
+    /**
+     * Create a playlist for a Spotify user. (The playlist will be empty until you add tracks.)
+     * @param userId The user’s Spotify user ID.
+     * @param name The name for the new playlist, for example "Your Coolest Playlist" . This name does not need to be unique; a user may have several playlists with the same name.
+     * @param options Additional body parameters. (public, collaborative, description)
+     * @param callback
+     */
+    WebApi.prototype.createPlaylist = function (userId, name, options, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/users/" + userId + "/playlists");
+        request.withBodyParameters({ name: name });
+        if (options) {
+            request.withBodyParameters(options);
+        }
+        return request.build().execute(http_manager_1.post, callback);
+    };
+    /**
+     * Get a list of the playlists owned or followed by the current Spotify user.
+     * @param options Additional query parameters. (limit, offset)
+     * @param callback
+     */
+    WebApi.prototype.getCurrentUsersPlaylists = function (options, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/playlists');
+        if (options) {
+            request.withQueryParameters(options);
+        }
+        return request.build().execute(http_manager_1.get, callback);
+    };
+    /**
+     * Get a list of the playlists owned or followed by a Spotify user.
+     * @param userId The user’s Spotify user ID.
+     * @param options Additional query parameters. (limit, offset)
+     * @param callback
+     */
+    WebApi.prototype.getUsersPlaylists = function (userId, options, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/users/" + userId + "/playlists");
+        if (options) {
+            request.withQueryParameters(options);
+        }
+        return request.build().execute(http_manager_1.get, callback);
+    };
+    /**
+     * Get full details of the tracks or episodes of a playlist owned by a Spotify user.
+     * @param playlistId The Spotify ID for the playlist.
+     * @param options Additional query parameters. (fields, limit, offset, market, additional_types)
+     * @param callback
+     */
+    WebApi.prototype.getPlaylistItems = function (playlistId, options, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/tracks");
+        if (options) {
+            request.withQueryParameters(options);
+        }
+        return request.build().execute(http_manager_1.get, callback);
+    };
+    /**
+     * Add one or more items to a user’s playlist.
+     * @param playlistId The Spotify ID for the playlist.
+     * @param uris A JSON array of the Spotify URIs to add, can be track or episode URIs. <br>
+     *             For example: {"uris": ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh","spotify:track:1301WleyT98MSxVHPZCA6M", "spotify:episode:512ojhOuo1ktJprKbVcKyQ"]} <br>
+                   A maximum of 100 items can be added in one request. <br>
+     * @param options Additional body parameters. (position)
+     * @param callback
+     */
+    WebApi.prototype.addPlaylistItems = function (playlistId, uris, options, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/tracks");
+        request.withBodyParameters({ uris: uris });
+        if (options) {
+            request.withBodyParameters(options);
+        }
+        return request.build().execute(http_manager_1.post, callback);
+    };
+    /**
+     * Remove one or more items from a user’s playlist.
+     * @param playlistId The Spotify ID for the playlist.
+     * @param tracks Tracks to remove. See {@link https://developer.spotify.com/documentation/web-api/reference/playlists/remove-tracks-playlist/} for more information.
+     * @param callback
+     */
+    WebApi.prototype.removePlaylistItems = function (playlistId, tracks, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/tracks");
+        request.withBodyParameters(tracks);
+        return request.build().execute(http_manager_1.del, callback);
+    };
+    /**
+     * Change a Playlist's Details
+     * @param playlistId The Spotify ID for the playlist.
+     * @param options Body parameters. At least one required. (name, public, collaborative, description) <br>
+     *                See {@link https://developer.spotify.com/documentation/web-api/reference/playlists/change-playlist-details/} for more information.
+     * @param callback
+     */
+    WebApi.prototype.changePlaylistDetails = function (playlistId, options, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId);
+        request.withBodyParameters(options);
+        return request.build().execute(http_manager_1.put, callback);
+    };
+    /**
+     * <strong>NOT WORKING</strong><br>
+     * Get the current image associated with a specific playlist.
+     * @param playlistId The Spotify ID for the playlist.
+     * @param callback
+     */
+    WebApi.prototype.getPlaylistCoverImage = function (playlistId, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/images");
+        // TODO: Response body empty???
+        return request.build().execute(http_manager_1.get, callback);
+    };
+    /**
+     * <strong>NOT TESTED</strong><br>
+     * Replace the image used to represent a specific playlist.
+     * @param playlistId The Spotify ID for the playlist.
+     * @param image Base64 encoded JPEG image data, maximum payload size is 256 KB <br>
+     *              Covert binary data to base64 string
+     *              <pre>
+     *                  const fs = require('fs')
+     *                  let bitmap = fs.readFileSync({file})
+     *                  let base64image = Buffer.from(bitmap).toString('base64')
+     *              </pre>
+     * @param callback
+     */
+    WebApi.prototype.setPlaylistCoverImage = function (playlistId, image, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/images").withHeaders({ 'Content-Type': 'image/jpeg' });
+        request.withBodyParameters({ image: image });
+        return request.build().execute(http_manager_1.put, callback);
+    };
+    /**
+     * Reorder an item or a group of items in a playlist.
+     * @param playlistId The Spotify ID for the playlist.
+     * @param rangeStart The position of the first item to be reordered.
+     * @param insertBefore The position where the items should be inserted. <br>
+                           To reorder the items to the end of the playlist, simply set insert_before to the position after the last item. <br>
+                           <strong>Examples:</strong>
+                           <pre>
+                            To reorder the first item to the last position in a playlist with 10 items, set range_start to 0, and insert_before to 10.
+                            To reorder the last item in a playlist with 10 items to the start of the playlist, set range_start to 9, and insert_before to 0.
+                           </pre>
+     * @param options
+     * @param callback
+     */
+    WebApi.prototype.reorderPlaylistItems = function (playlistId, rangeStart, insertBefore, options, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/tracks");
+        request.withBodyParameters({
+            range_start: rangeStart,
+            insert_before: insertBefore,
+        });
+        if (options) {
+            request.withBodyParameters(options);
+        }
+        return request.build().execute(http_manager_1.put, callback);
+    };
+    /**
+     * Replace all the items in a playlist, overwriting its existing items. This powerful request can be useful for replacing items, re-ordering existing items, or clearing the playlist.
+     * @param playlistId The Spotify ID for the playlist.
+     * @param uris A JSON array of the Spotify URIs to set, can be track or episode URIs. <br>
+     *             <strong>For example:</strong>
+     *              <pre>
+     *                 {"uris": ["spotify:track:4iV5W9uYEdYUVa79Axb7Rh", "spotify:track:1301WleyT98MSxVHPZCA6M", "spotify:episode:512ojhOuo1ktJprKbVcKyQ"]}
+     *              </pre>
+     * @param callback
+     */
+    WebApi.prototype.replacePlaylistItems = function (playlistId, uris, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/tracks");
+        request.withBodyParameters({
+            uris: uris,
+        });
+        return request.build().execute(http_manager_1.put, callback);
+    };
     return WebApi;
 }());
