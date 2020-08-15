@@ -32,7 +32,7 @@ class WebApi {
      */
     public getAlbums(albumIds: string[], options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/albums')
-        let ids: string = albumIds.join(',')
+        let ids: string = albumIds.join()
         request.withQueryParameters({ ids: ids })
         if (options) {
             request.withQueryParameters(options)
@@ -73,7 +73,7 @@ class WebApi {
      */
     public getArtists(artistIds: string[], callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/artists')
-        let ids: string = artistIds.join(',')
+        let ids: string = artistIds.join()
         request.withQueryParameters({ ids: ids })
         return request.build().execute(get, callback)
     }
@@ -229,7 +229,7 @@ class WebApi {
      */
     public getEpisodes(episodeIds: string[], options?: object, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/episodes')
-        let ids: string = episodeIds.join(',')
+        let ids: string = episodeIds.join()
         request.withQueryParameters({ ids: ids })
         if (options) {
             request.withQueryParameters(options)
@@ -247,7 +247,7 @@ class WebApi {
      */
     public getIsFollowingArtistOrUser(type: string, followIds: string[], callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/following/contains')
-        let ids: string = followIds.join(',')
+        let ids: string = followIds.join()
         request.withQueryParameters({
             type: type,
             ids: ids,
@@ -278,7 +278,7 @@ class WebApi {
      */
     public followArtistOrUser(type: string, followIds: string[], callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/following')
-        let ids: string = followIds.join(',')
+        let ids: string = followIds.join()
         request.withQueryParameters({
             type: type,
             ids: ids,
@@ -294,7 +294,7 @@ class WebApi {
      */
     public unfollowArtistOrUser(type: string, followIds: string[], callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath('/v1/me/following')
-        let ids: string = followIds.join(',')
+        let ids: string = followIds.join()
         request.withQueryParameters({
             type: type,
             ids: ids,
@@ -310,7 +310,7 @@ class WebApi {
      */
     public getIsFollowingPlaylist(playlistId: string, userIds: string[], callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath(`/v1/playlists/${playlistId}/followers/contains`)
-        let ids: string = userIds.join(',')
+        let ids: string = userIds.join()
         request.withQueryParameters({ ids: ids })
         return request.build().execute(get, callback)
     }
@@ -334,6 +334,159 @@ class WebApi {
      */
     public unfollowPlaylist(playlistId: string, callback?: Function) {
         let request = webApiBuilder(this.accessToken).withPath(`/v1/playlists/${playlistId}/followers`)
+        return request.build().execute(del, callback)
+    }
+
+    //Library API Endpoints
+
+    /**
+     * Check if one or more albums is already saved in the current Spotify user’s ‘Your Music’ library.
+     * @param albumIds A comma-separated list of the Spotify IDs for the albums. Maximum: 50 IDs.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public getIsAlbumsSaved(albumIds: string[], callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/albums/contains')
+        let ids = albumIds.join()
+        request.withQueryParameters({ ids: ids })
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Get a list of the albums saved in the current Spotify user’s ‘Your Music’ library.
+     * @param options Additional query parameters. (limit, offset)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public getSavedAblums(options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/albums')
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Save one or more albums to the current user’s ‘Your Music’ library.
+     * @param albumIds A comma-separated list of the Spotify IDs. For example: ids=4iV5W9uYEdYUVa79Axb7Rh,1301WleyT98MSxVHPZCA6M. Maximum: 50 IDs.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public saveAlbums(albumIds: string[], callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/albums')
+        let ids = albumIds.join()
+        request.withQueryParameters({ ids: ids })
+        return request.build().execute(put, callback)
+    }
+
+    /**
+     * Remove one or more albums from the current user’s ‘Your Music’ library.
+     * @param albumIds A comma-separated list of the Spotify IDs. For example: ids=4iV5W9uYEdYUVa79Axb7Rh,1301WleyT98MSxVHPZCA6M. Maximum: 50 IDs.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public removeSavedAlbums(albumIds: string[], callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/albums')
+        let ids = albumIds.join()
+        request.withQueryParameters({ ids: ids })
+        return request.build().execute(del, callback)
+    }
+
+    /**
+     * Check if one or more shows is already saved in the current Spotify user’s library.
+     * @param showIds A comma-separated list of the Spotify IDs for the shows. Maximum: 50 ids.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public getIsShowsSaved(showIds: string[], callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/shows/contains')
+        let ids = showIds.join()
+        request.withQueryParameters({ ids: ids })
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Get a list of shows saved in the current Spotify user’s library. Optional parameters can be used to limit the number of shows returned.
+     * @param options Additional query parameters. (limit, offset)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public getSavedShows(options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/shows')
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Save one or more shows to current Spotify user’s library.
+     * @param showIds A comma-separated list of Spotify IDs for the shows to be added to the user’s library.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public saveShows(showIds: string[], callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/shows')
+        let ids = showIds.join()
+        request.withQueryParameters({ ids: ids })
+        return request.build().execute(put, callback)
+    }
+
+    /**
+     * Delete one or more shows from current Spotify user’s library.
+     * @param showIds A comma-separated list of Spotify IDs for the shows to be deleted from the user’s library.
+     * @param options Additional query parameters. (market)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public removeSavedShows(showIds: string[], options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/shows')
+        let ids = showIds.join()
+        request.withQueryParameters({ ids: ids })
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(del, callback)
+    }
+
+    /**
+     * Check if one or more tracks is already saved in the current Spotify user’s ‘Your Music’ library.
+     * @param trackIds A comma-separated list of the Spotify IDs for the tracks. Maximum: 50 IDs.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public getIsTracksSaved(trackIds: string[], callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/tracks/contains')
+        let ids = trackIds.join()
+        request.withQueryParameters({ ids: ids })
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Get a list of the songs saved in the current Spotify user’s ‘Your Music’ library.
+     * @param options Additional query parameters. (market, limit, offset)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public getSavedTracks(options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/tracks')
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Save one or more tracks to the current user’s ‘Your Music’ library.
+     * @param trackIds A comma-separated list of the Spotify IDs. For example: ids=4iV5W9uYEdYUVa79Axb7Rh,1301WleyT98MSxVHPZCA6M. Maximum: 50 IDs.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public saveTracks(trackIds: string[], callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/tracks')
+        let ids = trackIds.join()
+        request.withQueryParameters({ ids: ids })
+        return request.build().execute(put, callback)
+    }
+
+    /**
+     * Remove one or more tracks from the current user’s ‘Your Music’ library.
+     * @param trackIds A comma-separated list of the Spotify IDs. For example: ids=4iV5W9uYEdYUVa79Axb7Rh,1301WleyT98MSxVHPZCA6M. Maximum: 50 IDs.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public removeSavedTracks(trackIds: string[], callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/tracks')
+        let ids = trackIds.join()
+        request.withQueryParameters({ ids: ids })
         return request.build().execute(del, callback)
     }
 }

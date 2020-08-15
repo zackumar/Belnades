@@ -28,7 +28,7 @@ var WebApi = /** @class */ (function () {
      */
     WebApi.prototype.getAlbums = function (albumIds, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/albums');
-        var ids = albumIds.join(',');
+        var ids = albumIds.join();
         request.withQueryParameters({ ids: ids });
         if (options) {
             request.withQueryParameters(options);
@@ -65,7 +65,7 @@ var WebApi = /** @class */ (function () {
      */
     WebApi.prototype.getArtists = function (artistIds, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/artists');
-        var ids = artistIds.join(',');
+        var ids = artistIds.join();
         request.withQueryParameters({ ids: ids });
         return request.build().execute(http_manager_1.get, callback);
     };
@@ -207,7 +207,7 @@ var WebApi = /** @class */ (function () {
      */
     WebApi.prototype.getEpisodes = function (episodeIds, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/episodes');
-        var ids = episodeIds.join(',');
+        var ids = episodeIds.join();
         request.withQueryParameters({ ids: ids });
         if (options) {
             request.withQueryParameters(options);
@@ -223,7 +223,7 @@ var WebApi = /** @class */ (function () {
      */
     WebApi.prototype.getIsFollowingArtistOrUser = function (type, followIds, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/following/contains');
-        var ids = followIds.join(',');
+        var ids = followIds.join();
         request.withQueryParameters({
             type: type,
             ids: ids,
@@ -252,7 +252,7 @@ var WebApi = /** @class */ (function () {
      */
     WebApi.prototype.followArtistOrUser = function (type, followIds, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/following');
-        var ids = followIds.join(',');
+        var ids = followIds.join();
         request.withQueryParameters({
             type: type,
             ids: ids,
@@ -267,7 +267,7 @@ var WebApi = /** @class */ (function () {
      */
     WebApi.prototype.unfollowArtistOrUser = function (type, followIds, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/following');
-        var ids = followIds.join(',');
+        var ids = followIds.join();
         request.withQueryParameters({
             type: type,
             ids: ids,
@@ -282,7 +282,7 @@ var WebApi = /** @class */ (function () {
      */
     WebApi.prototype.getIsFollowingPlaylist = function (playlistId, userIds, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/followers/contains");
-        var ids = userIds.join(',');
+        var ids = userIds.join();
         request.withQueryParameters({ ids: ids });
         return request.build().execute(http_manager_1.get, callback);
     };
@@ -304,6 +304,146 @@ var WebApi = /** @class */ (function () {
      */
     WebApi.prototype.unfollowPlaylist = function (playlistId, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/followers");
+        return request.build().execute(http_manager_1.del, callback);
+    };
+    //Library API Endpoints
+    /**
+     * Check if one or more albums is already saved in the current Spotify user’s ‘Your Music’ library.
+     * @param albumIds A comma-separated list of the Spotify IDs for the albums. Maximum: 50 IDs.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.getIsAlbumsSaved = function (albumIds, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/albums/contains');
+        var ids = albumIds.join();
+        request.withQueryParameters({ ids: ids });
+        return request.build().execute(http_manager_1.get, callback);
+    };
+    /**
+     * Get a list of the albums saved in the current Spotify user’s ‘Your Music’ library.
+     * @param options Additional query parameters. (limit, offset)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.getSavedAblums = function (options, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/albums');
+        if (options) {
+            request.withQueryParameters(options);
+        }
+        return request.build().execute(http_manager_1.get, callback);
+    };
+    /**
+     * Save one or more albums to the current user’s ‘Your Music’ library.
+     * @param albumIds A comma-separated list of the Spotify IDs. For example: ids=4iV5W9uYEdYUVa79Axb7Rh,1301WleyT98MSxVHPZCA6M. Maximum: 50 IDs.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.saveAlbums = function (albumIds, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/albums');
+        var ids = albumIds.join();
+        request.withQueryParameters({ ids: ids });
+        return request.build().execute(http_manager_1.put, callback);
+    };
+    /**
+     * Remove one or more albums from the current user’s ‘Your Music’ library.
+     * @param albumIds A comma-separated list of the Spotify IDs. For example: ids=4iV5W9uYEdYUVa79Axb7Rh,1301WleyT98MSxVHPZCA6M. Maximum: 50 IDs.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.removeSavedAlbums = function (albumIds, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/albums');
+        var ids = albumIds.join();
+        request.withQueryParameters({ ids: ids });
+        return request.build().execute(http_manager_1.del, callback);
+    };
+    /**
+     * Check if one or more shows is already saved in the current Spotify user’s library.
+     * @param showIds A comma-separated list of the Spotify IDs for the shows. Maximum: 50 ids.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.getIsShowsSaved = function (showIds, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/shows/contains');
+        var ids = showIds.join();
+        request.withQueryParameters({ ids: ids });
+        return request.build().execute(http_manager_1.get, callback);
+    };
+    /**
+     * Get a list of shows saved in the current Spotify user’s library. Optional parameters can be used to limit the number of shows returned.
+     * @param options Additional query parameters. (limit, offset)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.getSavedShows = function (options, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/shows');
+        if (options) {
+            request.withQueryParameters(options);
+        }
+        return request.build().execute(http_manager_1.get, callback);
+    };
+    /**
+     * Save one or more shows to current Spotify user’s library.
+     * @param showIds A comma-separated list of Spotify IDs for the shows to be added to the user’s library.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.saveShows = function (showIds, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/shows');
+        var ids = showIds.join();
+        request.withQueryParameters({ ids: ids });
+        return request.build().execute(http_manager_1.put, callback);
+    };
+    /**
+     * Delete one or more shows from current Spotify user’s library.
+     * @param showIds A comma-separated list of Spotify IDs for the shows to be deleted from the user’s library.
+     * @param options Additional query parameters. (market)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.removeSavedShows = function (showIds, options, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/shows');
+        var ids = showIds.join();
+        request.withQueryParameters({ ids: ids });
+        if (options) {
+            request.withQueryParameters(options);
+        }
+        return request.build().execute(http_manager_1.del, callback);
+    };
+    /**
+     * Check if one or more tracks is already saved in the current Spotify user’s ‘Your Music’ library.
+     * @param trackIds A comma-separated list of the Spotify IDs for the tracks. Maximum: 50 IDs.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.getIsTracksSaved = function (trackIds, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/tracks/contains');
+        var ids = trackIds.join();
+        request.withQueryParameters({ ids: ids });
+        return request.build().execute(http_manager_1.get, callback);
+    };
+    /**
+     * Get a list of the songs saved in the current Spotify user’s ‘Your Music’ library.
+     * @param options Additional query parameters. (market, limit, offset)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.getSavedTracks = function (options, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/tracks');
+        if (options) {
+            request.withQueryParameters(options);
+        }
+        return request.build().execute(http_manager_1.get, callback);
+    };
+    /**
+     * Save one or more tracks to the current user’s ‘Your Music’ library.
+     * @param trackIds A comma-separated list of the Spotify IDs. For example: ids=4iV5W9uYEdYUVa79Axb7Rh,1301WleyT98MSxVHPZCA6M. Maximum: 50 IDs.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.saveTracks = function (trackIds, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/tracks');
+        var ids = trackIds.join();
+        request.withQueryParameters({ ids: ids });
+        return request.build().execute(http_manager_1.put, callback);
+    };
+    /**
+     * Remove one or more tracks from the current user’s ‘Your Music’ library.
+     * @param trackIds A comma-separated list of the Spotify IDs. For example: ids=4iV5W9uYEdYUVa79Axb7Rh,1301WleyT98MSxVHPZCA6M. Maximum: 50 IDs.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.removeSavedTracks = function (trackIds, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/tracks');
+        var ids = trackIds.join();
+        request.withQueryParameters({ ids: ids });
         return request.build().execute(http_manager_1.del, callback);
     };
     return WebApi;
