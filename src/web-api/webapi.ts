@@ -505,4 +505,206 @@ class WebApi {
         }
         return request.build().execute(get, callback)
     }
+
+    // Player API BETA Endpoints
+
+    /**
+     * Add an item to the end of the user’s current playback queue.
+     * @param uri The uri of the item to add to the queue. Must be a track or an episode uri.
+     * @param options Additional query parameters. (device_id)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public addItemToQueue(uri: string, options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/queue')
+        request.withQueryParameters({ uri: uri })
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(post, callback)
+    }
+
+    /**
+     * Get information about a user’s available devices.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public getAvailableDevices(callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/devices')
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Get information about the user’s current playback state, including track or episode, progress, and active device.
+     * @param options Additional query parameters. (market, additional_types)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public getCurrentPlaybackInfo(options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/player')
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Get tracks from the current user’s recently played tracks.
+     * @param options Additional query parameters. (limit, after, before)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public getRecentlyPlayedTracks(options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/recently-played')
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Get the object currently being played on the user’s Spotify account.
+     * @param options Additional query parameters. (market, additional_types)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public getCurrentlyPlaying(options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/currently-playing')
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Pause playback on the user’s account.
+     * @param options Additional query parameters. (device_id)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public pausePlayback(options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/pause')
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(put, callback)
+    }
+
+    /**
+     * Seeks to the given position in the user’s currently playing track.
+     * @param positionMs The position in milliseconds to seek to. Must be a positive number. Passing in a position that is greater than the length of the track will cause the player to start playing the next song.
+     * @param options Additional query parameters. (device_id)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public seekInPlayingTrack(positionMs: number, options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/seek')
+        request.withQueryParameters({ position_ms: positionMs })
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(put, callback)
+    }
+
+    /**
+     * Set the repeat mode for the user’s playback. Options are repeat-track, repeat-context, and off.
+     * @param state track, context or off.
+track will repeat the current track.
+context will repeat the current context.
+off will turn repeat off.
+     * @param options Additional query parameters. (device_id)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public setRepeatState(state: string, options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/repeat')
+        request.withQueryParameters({ state: state })
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(put, callback)
+    }
+
+    /**
+     * Set the volume for the user’s current playback device.
+     * @param volume The volume to set. Must be a value from 0 to 100 inclusive.
+     * @param options Additional query parameters. (device_id)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public setVolume(volume: number, options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/volume')
+        request.withQueryParameters({ volume_percent: volume })
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(put, callback)
+    }
+
+    /**
+     * Skips to next track in the user’s queue.
+     * @param options Additional query parameters. (device_id)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public skipToNextPlayback(options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/next')
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(post, callback)
+    }
+
+    /**
+     * Skips to previous track in the user’s queue.
+     * @param options Additional query parameters. (device_id)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public skipToPreviousPlayback(options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/previous')
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(post, callback)
+    }
+
+    /**
+     * Start a new context or resume current playback on the user’s active device.
+     * @param queryOptions Additional query parameters. (device_id)
+     * @param bodyOptions Additional body parameters. See {@link https://developer.spotify.com/documentation/web-api/reference/player/start-a-users-playback/} for more info. (context_uri, uris, offset, position_ms)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public resumePlayback(queryOptions?: object, bodyOptions?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/play')
+        if (queryOptions) {
+            request.withQueryParameters(queryOptions)
+        }
+        if (bodyOptions) {
+            request.withBodyParameters(bodyOptions)
+        }
+        return request.build().execute(put, callback)
+    }
+
+    /**
+     * Toggle shuffle on or off for user’s playback.
+     * @param state true : Shuffle user’s playback
+false : Do not shuffle user’s playback.
+     * @param options Additional query parameters. (device_id)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public setShuffleState(state: string | boolean, options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/player/shuffle')
+        request.withQueryParameters({ state: state })
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(put, callback)
+    }
+
+    /**
+     * Transfer playback to a new device and determine if it should start playing.
+     * @param deviceIds A JSON array containing the ID of the device on which playback should be started/transferred.
+For example:{device_ids:["74ASZWbe4lXaubB36ztrGX"]}
+Note: Although an array is accepted, only a single device_id is currently supported. Supplying more than one will return 400 Bad Request
+     * @param options Additional body parameters. (play)
+     * @param callback 
+     */
+    public transferPlayback(deviceIds: string[], options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/player')
+        request.withBodyParameters({ device_ids: deviceIds })
+        if (options) {
+            request.withBodyParameters(options)
+        }
+        return request.build().execute(put, callback)
+    }
 }
