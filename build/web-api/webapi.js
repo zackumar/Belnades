@@ -1,40 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var webapi_request_1 = require("./webapi-request");
 var http_manager_1 = require("../http-manager");
@@ -250,21 +214,97 @@ var WebApi = /** @class */ (function () {
         }
         return request.build().execute(http_manager_1.get, callback);
     };
+    //Follow API Endpoints
+    /**
+     * Check to see if the current user is following one or more artists or other Spotify users.
+     * @param type The ID type: either artist or user.
+     * @param followIds A comma-separated list of the artist or the user Spotify IDs to check. For example: ids=74ASZWbe4lXaubB36ztrGX,08td7MxkoHQkXnWAYD8d6Q. A maximum of 50 IDs can be sent in one request.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.getIsFollowingArtistOrUser = function (type, followIds, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/following/contains');
+        var ids = followIds.join(',');
+        request.withQueryParameters({
+            type: type,
+            ids: ids,
+        });
+        return request.build().execute(http_manager_1.get, callback);
+    };
+    /**
+     * Get the current user’s followed artists.
+     * @param type The ID type: currently only artist is supported.
+     * @param options Additional query parameters. (limit, after)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.getFollowedArtistsOrUsers = function (type, options, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/following');
+        request.withQueryParameters({ type: type });
+        if (options) {
+            request.withQueryParameters(options);
+        }
+        return request.build().execute(http_manager_1.get, callback);
+    };
+    /**
+     * Add the current user as a follower of one or more artists or other Spotify users.
+     * @param type The ID type: either artist or user.
+     * @param followIds A comma-separated list of the artist or the user Spotify IDs. For example: ids=74ASZWbe4lXaubB36ztrGX,08td7MxkoHQkXnWAYD8d6Q. A maximum of 50 IDs can be sent in one request.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.followArtistOrUser = function (type, followIds, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/following');
+        var ids = followIds.join(',');
+        request.withQueryParameters({
+            type: type,
+            ids: ids,
+        });
+        return request.build().execute(http_manager_1.put, callback);
+    };
+    /**
+     * Remove the current user as a follower of one or more artists or other Spotify users.
+     * @param type The ID type: either artist or user.
+     * @param followIds A comma-separated list of the artist or the user Spotify IDs. For example: ids=74ASZWbe4lXaubB36ztrGX,08td7MxkoHQkXnWAYD8d6Q. A maximum of 50 IDs can be sent in one request.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.unfollowArtistOrUser = function (type, followIds, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/following');
+        var ids = followIds.join(',');
+        request.withQueryParameters({
+            type: type,
+            ids: ids,
+        });
+        return request.build().execute(http_manager_1.del, callback);
+    };
+    /**
+     * Check to see if one or more Spotify users are following a specified playlist.
+     * @param playlistId The Spotify ID of the playlist.
+     * @param userIds A comma-separated list of Spotify User IDs ; the ids of the users that you want to check to see if they follow the playlist. Maximum: 5 ids.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.getIsFollowingPlaylist = function (playlistId, userIds, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/followers/contains");
+        var ids = userIds.join(',');
+        request.withQueryParameters({ ids: ids });
+        return request.build().execute(http_manager_1.get, callback);
+    };
+    /**
+     * Add the current user as a follower of a playlist.
+     * @param playlistId The Spotify ID of the playlist. Any playlist can be followed, regardless of its public/private status, as long as you know its playlist ID.
+     * @param isPublic Defaults to true. If true the playlist will be included in user’s public playlists, if false it will remain private. To be able to follow playlists privately, the user must have granted the playlist-modify-private scope.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.followPlaylist = function (playlistId, isPublic, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/followers");
+        request.withBodyParameters({ public: isPublic });
+        return request.build().execute(http_manager_1.put, callback);
+    };
+    /**
+     * Remove the current user as a follower of a playlist.
+     * @param playlistId The Spotify ID of the playlist that is to be no longer followed.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.unfollowPlaylist = function (playlistId, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/followers");
+        return request.build().execute(http_manager_1.del, callback);
+    };
     return WebApi;
 }());
-;
-(function () { return __awaiter(void 0, void 0, void 0, function () {
-    var api, response;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                api = new WebApi('BQAohDS4lMZZJvhLcUgACq5uq-UPBlbT5Fs__iY-dQFzRQRn82bRN2z1P9vKB8axzqozs_uHCa-xWT_RrC-BrutyHHaGjoa17wovV-2H7t4ulCiKDJJZmYaljEsQ0DNoZ-KnSE8k6qDYDFkZ49sYNd51KydFz7qZFemdSv2UkwZgRD70KrHxfBYYiD9O9IW-rGl0dO1skVyh54-u3WbagWFrCgQGLRoFp-QVteBKqahmq9g1LXOylbs9KfSAAxYWF08khRNhVg8D81I');
-                return [4 /*yield*/, api.getEpisodes(['77o6BIVlYM3msb4MMIL1jH', '0Q86acNRm6V9GYx55SXKwf'])];
-            case 1:
-                response = _a.sent();
-                console.log(response.body);
-                return [2 /*return*/];
-        }
-    });
-}); })();
-//'4yvcSjfu4PC0CYQyLy4wSq'

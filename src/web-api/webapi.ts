@@ -1,5 +1,5 @@
 import { webApiBuilder } from './webapi-request'
-import { get } from '../http-manager'
+import { get, post, put, del } from '../http-manager'
 
 class WebApi {
     private accessToken: string
@@ -235,5 +235,105 @@ class WebApi {
             request.withQueryParameters(options)
         }
         return request.build().execute(get, callback)
+    }
+
+    //Follow API Endpoints
+
+    /**
+     * Check to see if the current user is following one or more artists or other Spotify users.
+     * @param type The ID type: either artist or user.
+     * @param followIds A comma-separated list of the artist or the user Spotify IDs to check. For example: ids=74ASZWbe4lXaubB36ztrGX,08td7MxkoHQkXnWAYD8d6Q. A maximum of 50 IDs can be sent in one request.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public getIsFollowingArtistOrUser(type: string, followIds: string[], callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/following/contains')
+        let ids: string = followIds.join(',')
+        request.withQueryParameters({
+            type: type,
+            ids: ids,
+        })
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Get the current user’s followed artists.
+     * @param type The ID type: currently only artist is supported.
+     * @param options Additional query parameters. (limit, after)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public getFollowedArtistsOrUsers(type: string, options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/following')
+        request.withQueryParameters({ type: type })
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Add the current user as a follower of one or more artists or other Spotify users.
+     * @param type The ID type: either artist or user.
+     * @param followIds A comma-separated list of the artist or the user Spotify IDs. For example: ids=74ASZWbe4lXaubB36ztrGX,08td7MxkoHQkXnWAYD8d6Q. A maximum of 50 IDs can be sent in one request.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public followArtistOrUser(type: string, followIds: string[], callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/following')
+        let ids: string = followIds.join(',')
+        request.withQueryParameters({
+            type: type,
+            ids: ids,
+        })
+        return request.build().execute(put, callback)
+    }
+
+    /**
+     * Remove the current user as a follower of one or more artists or other Spotify users.
+     * @param type The ID type: either artist or user.
+     * @param followIds A comma-separated list of the artist or the user Spotify IDs. For example: ids=74ASZWbe4lXaubB36ztrGX,08td7MxkoHQkXnWAYD8d6Q. A maximum of 50 IDs can be sent in one request.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public unfollowArtistOrUser(type: string, followIds: string[], callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me/following')
+        let ids: string = followIds.join(',')
+        request.withQueryParameters({
+            type: type,
+            ids: ids,
+        })
+        return request.build().execute(del, callback)
+    }
+
+    /**
+     * Check to see if one or more Spotify users are following a specified playlist.
+     * @param playlistId The Spotify ID of the playlist.
+     * @param userIds A comma-separated list of Spotify User IDs ; the ids of the users that you want to check to see if they follow the playlist. Maximum: 5 ids.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public getIsFollowingPlaylist(playlistId: string, userIds: string[], callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath(`/v1/playlists/${playlistId}/followers/contains`)
+        let ids: string = userIds.join(',')
+        request.withQueryParameters({ ids: ids })
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Add the current user as a follower of a playlist.
+     * @param playlistId The Spotify ID of the playlist. Any playlist can be followed, regardless of its public/private status, as long as you know its playlist ID.
+     * @param isPublic Defaults to true. If true the playlist will be included in user’s public playlists, if false it will remain private. To be able to follow playlists privately, the user must have granted the playlist-modify-private scope.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public followPlaylist(playlistId: string, isPublic?: boolean, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath(`/v1/playlists/${playlistId}/followers`)
+        request.withBodyParameters({ public: isPublic })
+        return request.build().execute(put, callback)
+    }
+
+    /**
+     * Remove the current user as a follower of a playlist.
+     * @param playlistId The Spotify ID of the playlist that is to be no longer followed.
+     * @param callback Optional callback method to use instead of promise.
+     */
+    public unfollowPlaylist(playlistId: string, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath(`/v1/playlists/${playlistId}/followers`)
+        return request.build().execute(del, callback)
     }
 }
