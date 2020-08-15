@@ -839,5 +839,28 @@ var WebApi = /** @class */ (function () {
         });
         return request.build().execute(http_manager_1.put, callback);
     };
+    //Search API Endpoints
+    /**
+     * Get Spotify Catalog information about albums, artists, playlists, tracks, shows or episodes that match a keyword string. <br>
+     * See {@link https://developer.spotify.com/documentation/web-api/reference/search/search/} for more information on query and filtering.
+     * @param query Search query keywords and optional field filters and operators.
+     * @param type A comma-separated list of item types to search across.
+Valid types are: album , artist, playlist, track, show and episode.
+Search results include hits from all the specified item types.
+For example: q=name:abacab&type=album,track returns both albums and tracks with “abacab” included in their name.
+     * @param options Additional query parameters. (market, limit, offset, include_external)
+     * @param callback
+     */
+    WebApi.prototype.search = function (query, type, options, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/search');
+        request.withQueryParameters({
+            q: query,
+            type: type,
+        });
+        if (options) {
+            request.withQueryParameters(options);
+        }
+        return request.build().execute(http_manager_1.get, callback);
+    };
     return WebApi;
 }());
