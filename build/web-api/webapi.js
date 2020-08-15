@@ -446,5 +446,19 @@ var WebApi = /** @class */ (function () {
         request.withQueryParameters({ ids: ids });
         return request.build().execute(http_manager_1.del, callback);
     };
+    //Personalization API Endpoints
+    /**
+     * Get the current user’s top artists or tracks based on calculated affinity.
+     * @param type The type of entity to return. Valid values: artists or tracks.
+     * @param options Additional query parameters. (limit, offset, time_range)
+     * @param callback Optional callback method to use instead of promise.
+     */
+    WebApi.prototype.getUsersTopTracksAndArtists = function (type, options, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/me/top/" + type);
+        if (options) {
+            request.withQueryParameters(options);
+        }
+        return request.build().execute(http_manager_1.get, callback);
+    };
     return WebApi;
 }());

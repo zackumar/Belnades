@@ -7,6 +7,7 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "start:dev": "nodemon",
         "build": "rimraf ./build && tsc",
+        "build:docs": "npm run build && typedoc --out doc src",
         "start": "npm run build && node build/index.js"
     },
     "repository": {
