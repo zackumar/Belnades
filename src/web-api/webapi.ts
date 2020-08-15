@@ -921,9 +921,9 @@ class WebApi {
      * See {@link https://developer.spotify.com/documentation/web-api/reference/search/search/} for more information on query and filtering.
      * @param query Search query keywords and optional field filters and operators.
      * @param type A comma-separated list of item types to search across.
-Valid types are: album , artist, playlist, track, show and episode.
-Search results include hits from all the specified item types.
-For example: q=name:abacab&type=album,track returns both albums and tracks with “abacab” included in their name.
+                   Valid types are: album , artist, playlist, track, show and episode.
+                   Search results include hits from all the specified item types.
+                   For example: q=name:abacab&type=album,track returns both albums and tracks with “abacab” included in their name.
      * @param options Additional query parameters. (market, limit, offset, include_external)
      * @param callback 
      */
@@ -933,6 +933,52 @@ For example: q=name:abacab&type=album,track returns both albums and tracks with 
             q: query,
             type: type,
         })
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(get, callback)
+    }
+
+    //Show API Endpoints
+
+    /**
+     * Get Spotify catalog information for a single show identified by its unique Spotify ID.
+     * @param showId The Spotify ID for the show.
+     * @param options Additonal query parameters. (market)
+     * @param callback
+     */
+    public getShow(showId: string, options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath(`/v1/shows/${showId}`)
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Get Spotify catalog information for multiple shows based on their Spotify IDs.
+     * @param showIds A comma-separated list of the Spotify IDs for the shows. Maximum: 50 IDs.
+     * @param options Additional query parameters. (market)
+     * @param callback
+     */
+    public getSeveralShows(showIds: string[], options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/shows/')
+        let ids = showIds.join()
+        request.withQueryParameters({ ids: ids })
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Get Spotify catalog information about a show’s episodes. Optional parameters can be used to limit the number of episodes returned.
+     * @param showId The Spotify ID for the show.
+     * @param options Additional query parameters. (market, limit, offset)
+     * @param callback
+     */
+    public getShowsEpisodes(showId: string, options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath(`/v1/shows/${showId}/episodes`)
         if (options) {
             request.withQueryParameters(options)
         }
