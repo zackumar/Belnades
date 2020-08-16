@@ -939,7 +939,7 @@ class WebApi {
         return request.build().execute(get, callback)
     }
 
-    //Show API Endpoints
+    //Shows API Endpoints
 
     /**
      * Get Spotify catalog information for a single show identified by its unique Spotify ID.
@@ -982,6 +982,70 @@ class WebApi {
         if (options) {
             request.withQueryParameters(options)
         }
+        return request.build().execute(get, callback)
+    }
+
+    //Tracks API Enpoints
+
+    /**
+     * Get Spotify catalog information for a single track identified by its unique Spotify ID.
+     * @param trackId The Spotify ID for the track.
+     * @param options Additional query parameters. (market)
+     * @param callback
+     */
+    public getTrack(trackId: string, options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath(`/v1/tracks/${trackId}`)
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Get Spotify catalog information for multiple tracks based on their Spotify IDs.
+     * @param trackIds A comma-separated list of the Spotify IDs for the tracks. Maximum: 50 IDs.
+     * @param options Additional query parameters. (market)
+     * @param callback
+     */
+    public getSeveralTracks(trackIds: string[], options?: object, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/tracks/')
+        let ids: string = trackIds.join()
+        request.withQueryParameters({ ids: ids })
+        if (options) {
+            request.withQueryParameters(options)
+        }
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Get a detailed audio analysis for a single track identified by its unique Spotify ID.
+     * @param trackId The Spotify ID for the track.
+     * @param callback
+     */
+    public getAudioAnalysisForTrack(trackId: string, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath(`/v1/audio-analysis/${trackId}`)
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Get audio feature information for a single track identified by its unique Spotify ID.
+     * @param trackId The Spotify ID for the track.
+     * @param callback
+     */
+    public getAudioFeaturesForTrack(trackId: string, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath(`/v1/audio-features/${trackId}`)
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Get audio features for multiple tracks based on their Spotify IDs.
+     * @param trackIds A comma-separated list of the Spotify IDs for the tracks. Maximum: 100 IDs.
+     * @param callback
+     */
+    public getAudioFeaturesForSeveralTracks(trackIds: string[], callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/audio-features/')
+        let ids: string = trackIds.join()
+        request.withQueryParameters({ ids: ids })
         return request.build().execute(get, callback)
     }
 }
