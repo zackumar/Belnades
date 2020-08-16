@@ -1048,4 +1048,25 @@ class WebApi {
         request.withQueryParameters({ ids: ids })
         return request.build().execute(get, callback)
     }
+
+    //Users Profiles API Endpoints
+
+    /**
+     * Get detailed profile information about the current user (including the current user’s username).
+     * @param callback
+     */
+    public getCurrentUserProfile(callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath('/v1/me')
+        return request.build().execute(get, callback)
+    }
+
+    /**
+     * Get public profile information about a Spotify user.
+     * @param userId The user’s Spotify user ID.
+     * @param callback
+     */
+    public getUserProfile(userId: string, callback?: Function) {
+        let request = webApiBuilder(this.accessToken).withPath(`/v1/users/${userId}`)
+        return request.build().execute(get, callback)
+    }
 }

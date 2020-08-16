@@ -1,40 +1,4 @@
 "use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
-    function verb(n) { return function (v) { return step([n, v]); }; }
-    function step(op) {
-        if (f) throw new TypeError("Generator is already executing.");
-        while (_) try {
-            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [op[0] & 2, t.value];
-            switch (op[0]) {
-                case 0: case 1: t = op; break;
-                case 4: _.label++; return { value: op[1], done: false };
-                case 5: _.label++; y = op[1]; op = [0]; continue;
-                case 7: op = _.ops.pop(); _.trys.pop(); continue;
-                default:
-                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
-                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
-                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
-                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
-                    if (t[2]) _.ops.pop();
-                    _.trys.pop(); continue;
-            }
-            op = body.call(thisArg, _);
-        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
-        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
-    }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var webapi_request_1 = require("./webapi-request");
 var http_manager_1 = require("../http-manager");
@@ -998,28 +962,23 @@ var WebApi = /** @class */ (function () {
         request.withQueryParameters({ ids: ids });
         return request.build().execute(http_manager_1.get, callback);
     };
+    //Users Profiles API Endpoints
+    /**
+     * Get detailed profile information about the current user (including the current user’s username).
+     * @param callback
+     */
+    WebApi.prototype.getCurrentUserProfile = function (callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me');
+        return request.build().execute(http_manager_1.get, callback);
+    };
+    /**
+     * Get public profile information about a Spotify user.
+     * @param userId The user’s Spotify user ID.
+     * @param callback
+     */
+    WebApi.prototype.getUserProfile = function (userId, callback) {
+        var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/users/" + userId);
+        return request.build().execute(http_manager_1.get, callback);
+    };
     return WebApi;
 }());
-;
-(function () { return __awaiter(void 0, void 0, void 0, function () {
-    var api, response, e_1;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                api = new WebApi('BQBc99AkHJF4WWGk_0G89Yndz7rnfC4OXevvzYpCd1Jk-4fIu67qKPMxkwJAzO2h18qxLBLNlVW96C78-S6uqiAunfIUrwN53e_kdf4rWskDay67V8AAjF_tYYNjJLu9Dx1fBTrerMZC9ZiF_0I-b-1tZMSpqm96aOS7X-FrjKh1Du8GgOLGffrxbxa1IqP-b4bFCXDU7qAVkT0xNOTRmk-7Nkn-mCEIXQ7M2WiPTnHThJDPOp6mYqlcSTRPrYEapMBXDBEaUEpdick');
-                _a.label = 1;
-            case 1:
-                _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, api.getAudioFeaturesForSeveralTracks(['4JpKVNYnVcJ8tuMKjAj50A', '2NRANZE9UCmPAS5XVbXL40', '24JygzOLM0EmRQeGtFcIcG'])];
-            case 2:
-                response = _a.sent();
-                console.log(response.body);
-                return [3 /*break*/, 4];
-            case 3:
-                e_1 = _a.sent();
-                console.log(e_1.response.text);
-                return [3 /*break*/, 4];
-            case 4: return [2 /*return*/];
-        }
-    });
-}); })();
