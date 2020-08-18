@@ -21,6 +21,10 @@ I started Belnades because of the limited amount of libraries available for the 
 
 -   Wrapper to access all [Spotify Web API endpoints](https://developer.spotify.com/documentation/web-api/reference-beta/)
 
+### What I want to add
+
+-   Spotify Connect functionality
+
 ## Installation
 
 Using npm:
@@ -29,7 +33,7 @@ Using npm:
 $ npm install belnades --save
 ```
 
-## Example
+## Usage
 
 ```js
 const { WebAPI, AuthorizationCodeFlow, Scope } = require('belmont')
@@ -40,12 +44,11 @@ const webApi = new WebAPI()
 // Play music
 async function playMusic() {
     try {
-
         //Authorize using the user-modified-playback-state scope
         let accessToken = await authorization.authorize([Scope.USER_MODIFIED_PLAYBACK_STATE])
 
         //Set access token of WebAPI
-        webApi.setAccessToken(accessToken!)
+        webApi.setAccessToken(accessToken)
 
         //Call API
         await webApi.resumePlayback()
@@ -56,3 +59,11 @@ async function playMusic() {
 
 playMusic()
 ```
+
+## Credit
+
+Belnades is inspired by [Spotify Web API Node](https://github.com/thelinmichael/spotify-web-api-node) and the lovely work put in by [thelinmichael](https://github.com/thelinmichael), [JMPerez](https://github.com/JMPerez), and its [contributors](https://github.com/thelinmichael/spotify-web-api-node/network/members). The authorization flows are based off of [Spotify's Account Authentication Examples](https://github.com/spotify/web-api-auth-examples).
+
+## License
+
+[MIT](LICENSE)
