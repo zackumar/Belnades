@@ -3,47 +3,47 @@ export { ClientCredentialFlow } from './clientcredentialsflow'
 
 export enum Scope {
     //Images
-    ugc_image_upload = 'ugc-image-upload',
+    UGC_IMAGE_UPLOAD = 'ugc-image-upload',
 
     //Spotify Connect
-    user_read_playback_state = 'user-read-playback-state',
-    user_modified_playback_state = 'user-modify-playback-state',
-    user_read_currently_playing = 'user-read-currently-playing',
+    USER_READ_PLAYBACK_STATE = 'user-read-playback-state',
+    USER_MODIFIED_PLAYBACK_STATE = 'user-modify-playback-state',
+    USER_READ_CURRENTLY_PLAYING = 'user-read-currently-playing',
 
     //Playback
-    streaming = 'streaming',
-    app_remote_control = 'app-remote-control',
+    STREAMING = 'streaming',
+    APP_REMOTE_CONTROL = 'app-remote-control',
 
     //Users
-    user_read_email = 'user-read-email',
-    user_read_private = 'user-read-private',
+    USER_READ_EMAIL = 'user-read-email',
+    USER_READ_PRIVATE = 'user-read-private',
 
     //Playlist
-    playlist_read_collaborative = 'playlist-read-collaborative',
-    playlist_modify_public = 'playlist-modify-public',
-    playlist_read_private = 'playlist-read-private',
-    playlist_modify_private = 'playlist-modify-private',
+    PLAYLIST_READ_COLLABORATIVE = 'playlist-read-collaborative',
+    PLAYLIST_MODIFY_PUBLIC = 'playlist-modify-public',
+    PLAYLIST_READ_PRIVATE = 'playlist-read-private',
+    PLAYLIST_MODIFY_PRIVATE = 'playlist-modify-private',
 
     //Library
-    user_library_modify = 'user-library-modify',
-    user_library_read = 'user-library-read',
+    USER_LIBRARY_MODIFY = 'user-library-modify',
+    USER_LIBRARY_READ = 'user-library-read',
 
     //Listenting History
-    user_top_read = 'user-top-read',
-    user_read_playback_position = 'user-read-playback-position',
-    user_read_recently_played = 'user-read-recently-played',
+    USER_TOP_READ = 'user-top-read',
+    USER_READ_PLAYBACK_POSITION = 'user-read-playback-position',
+    USER_READ_RECENTLY_PLAYED = 'user-read-recently-played',
 
     //Follow
-    user_follow_read = 'user-follow-read',
-    user_follow_modify = 'user-follow-modify',
+    USER_FOLLOW_READ = 'user-follow-read',
+    USER_FOLLOW_MODIFY = 'user-follow-modify',
 }
 
 export const allScopes = Object.values(Scope)
-export const imageScopes = [Scope.ugc_image_upload]
-export const spotifyConnectScopes = [Scope.user_read_playback_state, Scope.user_modified_playback_state, Scope.user_read_currently_playing]
-export const playbackScopes = [Scope.streaming, Scope.app_remote_control]
-export const userScopes = [Scope.user_read_email, Scope.user_read_private]
-export const playlistScopes = [Scope.playlist_read_collaborative, Scope.playlist_modify_public, Scope.playlist_read_private, Scope.playlist_modify_private]
-export const libraryScopes = [Scope.user_library_modify, Scope.user_library_read]
-export const listeningHistoryScopes = [Scope.user_top_read, Scope.user_read_playback_position, Scope.user_read_recently_played]
-export const followScopes = [Scope.user_follow_read, Scope.user_follow_modify]
+export const imageScopes = [Scope.UGC_IMAGE_UPLOAD]
+export const spotifyConnectScopes = [Scope.USER_READ_PLAYBACK_STATE, Scope.USER_MODIFIED_PLAYBACK_STATE, Scope.USER_READ_CURRENTLY_PLAYING]
+export const playbackScopes = [Scope.STREAMING, Scope.APP_REMOTE_CONTROL]
+export const userScopes = [Scope.USER_READ_EMAIL, Scope.USER_READ_PRIVATE]
+export const playlistScopes = [Scope.PLAYLIST_READ_COLLABORATIVE, Scope.PLAYLIST_MODIFY_PUBLIC, Scope.PLAYLIST_READ_PRIVATE, Scope.PLAYLIST_MODIFY_PRIVATE]
+export const libraryScopes = [Scope.USER_LIBRARY_MODIFY, Scope.USER_LIBRARY_READ]
+export const listeningHistoryScopes = [Scope.USER_TOP_READ, Scope.USER_READ_PLAYBACK_POSITION, Scope.USER_READ_RECENTLY_PLAYED]
+export const followScopes = [Scope.USER_FOLLOW_READ, Scope.USER_FOLLOW_MODIFY]

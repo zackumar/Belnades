@@ -5,8 +5,12 @@ var webapi_request_1 = require("./webapi-request");
 var http_manager_1 = require("../request/http-manager");
 var WebAPI = /** @class */ (function () {
     function WebAPI(accessToken) {
-        this.accessToken = accessToken;
+        if (accessToken)
+            this.accessToken = accessToken;
     }
+    WebAPI.prototype.setAccessToken = function (accessToken) {
+        this.accessToken = accessToken;
+    };
     //Album API Endpoints
     /**
      * Get Spotify catalog information for a single album.

@@ -67,7 +67,62 @@
 				<a href="#belnades" id="belnades" style="color: inherit; text-decoration: none;">
 					<h1>Belnades</h1>
 				</a>
-				<p>A Spotify API for NodeJS</p>
+				<p><img src="/images/logo.png" alt="Belnades Logo"></p>
+				<p>Belnades is a Spotify API wrapper that runs on NodeJS, meant to be run client side without the need for a browser.</p>
+				<a href="#motivation" id="motivation" style="color: inherit; text-decoration: none;">
+					<h2>Motivation</h2>
+				</a>
+				<p>I started Belnades because of the limited amount of libraries available for the Spotify API in Javascript. Many of them are written for Python and C.</p>
+				<a href="#table-of-contents" id="table-of-contents" style="color: inherit; text-decoration: none;">
+					<h2>Table of Contents</h2>
+				</a>
+				<ul>
+					<li><a href="#features">Features</a></li>
+					<li><a href="#installation">Installation</a></li>
+					<li><a href="#usage">Usage</a></li>
+				</ul>
+				<a href="#features" id="features" style="color: inherit; text-decoration: none;">
+					<h2>Features</h2>
+				</a>
+				<ul>
+					<li><p>Authenticate using <a href="https://developer.spotify.com/documentation/general/guides/authorization-guide/#authorization-code-flow-with-proof-key-for-code-exchange-pkce">Authorization Code with PKCE Flow</a> or <a href="https://developer.spotify.com/documentation/general/guides/authorization-guide/#client-credentials-flow">Client Credentials Flow</a></p>
+					</li>
+					<li><p>Supports Callbacks and Async/Await</p>
+					</li>
+					<li><p>Wrapper to access all <a href="https://developer.spotify.com/documentation/web-api/reference-beta/">Spotify Web API endpoints</a></p>
+					</li>
+				</ul>
+				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+					<h2>Installation</h2>
+				</a>
+				<p>Using npm:</p>
+				<pre><code class="language-bash">$ npm install belnades --save</code></pre>
+				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+					<h2>Example</h2>
+				</a>
+				<pre><code class="language-js"><span class="hljs-keyword">const</span> { WebAPI, AuthorizationCodeFlow, Scope } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;belmont&#x27;</span>)
+
+<span class="hljs-keyword">const</span> authorization = <span class="hljs-keyword">new</span> AuthorizationCodeFlow(<span class="hljs-string">&#x27;CLIENT_ID&#x27;</span>) <span class="hljs-comment">//Your client id</span>
+<span class="hljs-keyword">const</span> webApi = <span class="hljs-keyword">new</span> WebAPI()
+
+<span class="hljs-comment">// Play music</span>
+<span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">playMusic</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-keyword">try</span> {
+
+        <span class="hljs-comment">//Authorize using the user-modified-playback-state scope</span>
+        <span class="hljs-keyword">let</span> accessToken = <span class="hljs-keyword">await</span> authorization.authorize([Scope.USER_MODIFIED_PLAYBACK_STATE])
+
+        <span class="hljs-comment">//Set access token of WebAPI</span>
+        webApi.setAccessToken(accessToken!)
+
+        <span class="hljs-comment">//Call API</span>
+        <span class="hljs-keyword">await</span> webApi.resumePlayback()
+    } <span class="hljs-keyword">catch</span> (error) {
+        <span class="hljs-built_in">console</span>.log(error)
+    }
+}
+
+playMusic()</code></pre>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">

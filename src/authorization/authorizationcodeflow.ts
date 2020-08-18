@@ -11,7 +11,6 @@ import { Scope } from './authorization'
  */
 export class AuthorizationCodeFlow {
     private clientId: string
-    private scope?: string
 
     private app?: express.Express
     private redirectUri = 'http://localhost:8888/callback'
@@ -24,12 +23,9 @@ export class AuthorizationCodeFlow {
     /**
      * Create an Authorization Code (PKCE) Flow
      * @param clientId App client ID
-     * @param scope Spotify Premium scope. An array of scopes from Scope. You can also use one scope groups.
      */
-    constructor(clientId: string, scope?: Scope[]) {
+    constructor(clientId: string) {
         this.clientId = clientId
-
-        this.scope = scope?.join(' ')
     }
 
     /**
@@ -63,19 +59,19 @@ export class AuthorizationCodeFlow {
 
     /**
      * Authorize the app. Returns access_token and other information. Assigns intance access tokena and refresh token.
+     * @param scopes Spotify Premium scope. An array of scopes from Scope. You can also use one scope groups.
      * @param callback
      */
-    public authorize(callback?: Function) {
+    public authorize(scopes?: Scope[], callback?: Function): string | Promise<string> | undefined {
         if (callback) {
-            this.authCodeFlow(callback)
-            return
-        }
-        return new Promise((resolve, reject) => {
-            this.authCodeFlow((err: any, res: any) => {
-                if (err) reject(err)
-                else resolve(res)
+            this.authCodeFlow(callback, scopes)
+        } else
+            return new Promise((resolve, reject) => {
+                this.authCodeFlow((err: any, res: any) => {
+                    if (err) reject(err)
+                    else resolve(res)
+                }, scopes)
             })
-        })
     }
 
     /**
@@ -83,7 +79,7 @@ export class AuthorizationCodeFlow {
      * @param refreshToken Optional refresh token to refresh with. Useful if refresh token is saved before exit. Otherwise the instance refresh token can be used.
      * @param callback
      */
-    public refresh(refreshToken?: string, callback?: Function) {
+    public refresh(refreshToken?: string, callback?: Function): string | Promise<string> | undefined {
         if (callback) {
             this.refreshTokenFlow(callback, refreshToken)
             return
@@ -96,7 +92,7 @@ export class AuthorizationCodeFlow {
         })
     }
 
-    private authCodeFlow(callback: Function) {
+    private authCodeFlow(callback: Function, scopes?: Scope[]) {
         let state = this.generateRandomString(16)
         let codeVerifier = this.base64URLEncode(crypto.randomBytes(32))
         let codeChallenge = this.base64URLEncode(this.sha256(codeVerifier))
@@ -114,7 +110,7 @@ export class AuthorizationCodeFlow {
                     code_challenge_method: 'S256',
                     code_challenge: codeChallenge,
                     state: state,
-                    scope: this.scope,
+                    scope: scopes?.join(' ') || undefined,
                 })
                 .build()
 
@@ -124,6 +120,12 @@ export class AuthorizationCodeFlow {
         this.app.get('/callback', (req, res) => {
             if (req.query.state !== state) {
                 res.send('Error: State Mismatch')
+                return
+            }
+
+            if (req.query.error === 'access_denied') {
+                console.error('Spotify authorization denied.')
+                res.send('Error: Access Denied')
                 return
             }
 
@@ -149,7 +151,7 @@ export class AuthorizationCodeFlow {
                     return callback(undefined, res.body.access_token)
                 })
 
-            res.send(this.accessToken)
+            res.send('Success. You can now close this tab.')
         })
 
         this.app.listen(8888)

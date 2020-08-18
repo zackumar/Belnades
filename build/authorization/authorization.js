@@ -8,39 +8,39 @@ Object.defineProperty(exports, "ClientCredentialFlow", { enumerable: true, get: 
 var Scope;
 (function (Scope) {
     //Images
-    Scope["ugc_image_upload"] = "ugc-image-upload";
+    Scope["UGC_IMAGE_UPLOAD"] = "ugc-image-upload";
     //Spotify Connect
-    Scope["user_read_playback_state"] = "user-read-playback-state";
-    Scope["user_modified_playback_state"] = "user-modify-playback-state";
-    Scope["user_read_currently_playing"] = "user-read-currently-playing";
+    Scope["USER_READ_PLAYBACK_STATE"] = "user-read-playback-state";
+    Scope["USER_MODIFIED_PLAYBACK_STATE"] = "user-modify-playback-state";
+    Scope["USER_READ_CURRENTLY_PLAYING"] = "user-read-currently-playing";
     //Playback
-    Scope["streaming"] = "streaming";
-    Scope["app_remote_control"] = "app-remote-control";
+    Scope["STREAMING"] = "streaming";
+    Scope["APP_REMOTE_CONTROL"] = "app-remote-control";
     //Users
-    Scope["user_read_email"] = "user-read-email";
-    Scope["user_read_private"] = "user-read-private";
+    Scope["USER_READ_EMAIL"] = "user-read-email";
+    Scope["USER_READ_PRIVATE"] = "user-read-private";
     //Playlist
-    Scope["playlist_read_collaborative"] = "playlist-read-collaborative";
-    Scope["playlist_modify_public"] = "playlist-modify-public";
-    Scope["playlist_read_private"] = "playlist-read-private";
-    Scope["playlist_modify_private"] = "playlist-modify-private";
+    Scope["PLAYLIST_READ_COLLABORATIVE"] = "playlist-read-collaborative";
+    Scope["PLAYLIST_MODIFY_PUBLIC"] = "playlist-modify-public";
+    Scope["PLAYLIST_READ_PRIVATE"] = "playlist-read-private";
+    Scope["PLAYLIST_MODIFY_PRIVATE"] = "playlist-modify-private";
     //Library
-    Scope["user_library_modify"] = "user-library-modify";
-    Scope["user_library_read"] = "user-library-read";
+    Scope["USER_LIBRARY_MODIFY"] = "user-library-modify";
+    Scope["USER_LIBRARY_READ"] = "user-library-read";
     //Listenting History
-    Scope["user_top_read"] = "user-top-read";
-    Scope["user_read_playback_position"] = "user-read-playback-position";
-    Scope["user_read_recently_played"] = "user-read-recently-played";
+    Scope["USER_TOP_READ"] = "user-top-read";
+    Scope["USER_READ_PLAYBACK_POSITION"] = "user-read-playback-position";
+    Scope["USER_READ_RECENTLY_PLAYED"] = "user-read-recently-played";
     //Follow
-    Scope["user_follow_read"] = "user-follow-read";
-    Scope["user_follow_modify"] = "user-follow-modify";
+    Scope["USER_FOLLOW_READ"] = "user-follow-read";
+    Scope["USER_FOLLOW_MODIFY"] = "user-follow-modify";
 })(Scope = exports.Scope || (exports.Scope = {}));
 exports.allScopes = Object.values(Scope);
-exports.imageScopes = [Scope.ugc_image_upload];
-exports.spotifyConnectScopes = [Scope.user_read_playback_state, Scope.user_modified_playback_state, Scope.user_read_currently_playing];
-exports.playbackScopes = [Scope.streaming, Scope.app_remote_control];
-exports.userScopes = [Scope.user_read_email, Scope.user_read_private];
-exports.playlistScopes = [Scope.playlist_read_collaborative, Scope.playlist_modify_public, Scope.playlist_read_private, Scope.playlist_modify_private];
-exports.libraryScopes = [Scope.user_library_modify, Scope.user_library_read];
-exports.listeningHistoryScopes = [Scope.user_top_read, Scope.user_read_playback_position, Scope.user_read_recently_played];
-exports.followScopes = [Scope.user_follow_read, Scope.user_follow_modify];
+exports.imageScopes = [Scope.UGC_IMAGE_UPLOAD];
+exports.spotifyConnectScopes = [Scope.USER_READ_PLAYBACK_STATE, Scope.USER_MODIFIED_PLAYBACK_STATE, Scope.USER_READ_CURRENTLY_PLAYING];
+exports.playbackScopes = [Scope.STREAMING, Scope.APP_REMOTE_CONTROL];
+exports.userScopes = [Scope.USER_READ_EMAIL, Scope.USER_READ_PRIVATE];
+exports.playlistScopes = [Scope.PLAYLIST_READ_COLLABORATIVE, Scope.PLAYLIST_MODIFY_PUBLIC, Scope.PLAYLIST_READ_PRIVATE, Scope.PLAYLIST_MODIFY_PRIVATE];
+exports.libraryScopes = [Scope.USER_LIBRARY_MODIFY, Scope.USER_LIBRARY_READ];
+exports.listeningHistoryScopes = [Scope.USER_TOP_READ, Scope.USER_READ_PLAYBACK_POSITION, Scope.USER_READ_RECENTLY_PLAYED];
+exports.followScopes = [Scope.USER_FOLLOW_READ, Scope.USER_FOLLOW_MODIFY];

@@ -16,12 +16,10 @@ var AuthorizationCodeFlow = /** @class */ (function () {
     /**
      * Create an Authorization Code (PKCE) Flow
      * @param clientId App client ID
-     * @param scope Spotify Premium scope. An array of scopes from Scope. You can also use one scope groups.
      */
-    function AuthorizationCodeFlow(clientId, scope) {
+    function AuthorizationCodeFlow(clientId) {
         this.redirectUri = 'http://localhost:8888/callback';
         this.clientId = clientId;
-        this.scope = scope === null || scope === void 0 ? void 0 : scope.join(' ');
     }
     /**
      * Get access token
@@ -51,22 +49,23 @@ var AuthorizationCodeFlow = /** @class */ (function () {
     };
     /**
      * Authorize the app. Returns access_token and other information. Assigns intance access tokena and refresh token.
+     * @param scopes Spotify Premium scope. An array of scopes from Scope. You can also use one scope groups.
      * @param callback
      */
-    AuthorizationCodeFlow.prototype.authorize = function (callback) {
+    AuthorizationCodeFlow.prototype.authorize = function (scopes, callback) {
         var _this = this;
         if (callback) {
-            this.authCodeFlow(callback);
-            return;
+            this.authCodeFlow(callback, scopes);
         }
-        return new Promise(function (resolve, reject) {
-            _this.authCodeFlow(function (err, res) {
-                if (err)
-                    reject(err);
-                else
-                    resolve(res);
+        else
+            return new Promise(function (resolve, reject) {
+                _this.authCodeFlow(function (err, res) {
+                    if (err)
+                        reject(err);
+                    else
+                        resolve(res);
+                }, scopes);
             });
-        });
     };
     /**
      * Uses a refresh token to reauthorize the app. This allows the user to grant permission only once.
@@ -88,7 +87,7 @@ var AuthorizationCodeFlow = /** @class */ (function () {
             }, refreshToken);
         });
     };
-    AuthorizationCodeFlow.prototype.authCodeFlow = function (callback) {
+    AuthorizationCodeFlow.prototype.authCodeFlow = function (callback, scopes) {
         var _this = this;
         var state = this.generateRandomString(16);
         var codeVerifier = this.base64URLEncode(crypto_1.default.randomBytes(32));
@@ -106,7 +105,7 @@ var AuthorizationCodeFlow = /** @class */ (function () {
                 code_challenge_method: 'S256',
                 code_challenge: codeChallenge,
                 state: state,
-                scope: _this.scope,
+                scope: (scopes === null || scopes === void 0 ? void 0 : scopes.join(' ')) || undefined,
             })
                 .build();
             res.redirect(request.getUrl());
@@ -114,6 +113,11 @@ var AuthorizationCodeFlow = /** @class */ (function () {
         this.app.get('/callback', function (req, res) {
             if (req.query.state !== state) {
                 res.send('Error: State Mismatch');
+                return;
+            }
+            if (req.query.error === 'access_denied') {
+                console.error('Spotify authorization denied.');
+                res.send('Error: Access Denied');
                 return;
             }
             _this.authTokenBuilder()
@@ -135,7 +139,7 @@ var AuthorizationCodeFlow = /** @class */ (function () {
                 _this.expirationDate.setSeconds(_this.expirationDate.getSeconds() + res.body.expires_in);
                 return callback(undefined, res.body.access_token);
             });
-            res.send(_this.accessToken);
+            res.send('Success. You can now close this tab.');
         });
         this.app.listen(8888);
     };

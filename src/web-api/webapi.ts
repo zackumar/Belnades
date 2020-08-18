@@ -2,9 +2,13 @@ import { webApiBuilder } from './webapi-request'
 import { get, post, put, del } from '../request/http-manager'
 
 export class WebAPI {
-    private accessToken: string
+    private accessToken!: string
 
-    constructor(accessToken: string) {
+    constructor(accessToken?: string) {
+        if (accessToken) this.accessToken = accessToken
+    }
+
+    public setAccessToken(accessToken: string) {
         this.accessToken = accessToken
     }
 
