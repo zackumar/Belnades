@@ -1,6 +1,6 @@
 # Belnades
 
-[![Belnades Logo](https://raw.githubusercontent.com/zackumar/Belnades/master/images/logo.png)](https://github.com/zackumar/Belnades)
+[![Belnades Logo](images/logo.png)](https://github.com/zackumar/Belnades)
 
 Belnades is a Spotify API wrapper that runs on NodeJS, meant to be run client side without the need for a browser.
 
@@ -13,6 +13,7 @@ I started Belnades because of the limited amount of libraries available for the 
 -   [Features](#features)
 -   [Installation](#installation)
 -   [Usage](#usage)
+-   [Documentation](#documentation)
 
 ## Features
 
