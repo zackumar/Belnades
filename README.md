@@ -60,6 +60,10 @@ async function playMusic() {
 playMusic()
 ```
 
+## Documentation
+
+For documentation locally, you can view `index.html` in the `docs` folder. Or you can visit https://zackumar.github.io/Belnades/. Also check out Spotify's official documentation at https://developer.spotify.com/documentation/.
+
 ## Credit
 
 Belnades is inspired by [Spotify Web API Node](https://github.com/thelinmichael/spotify-web-api-node) and the lovely work put in by [thelinmichael](https://github.com/thelinmichael), [JMPerez](https://github.com/JMPerez), and its [contributors](https://github.com/thelinmichael/spotify-web-api-node/network/members). The authorization flows are based off of [Spotify's Account Authentication Examples](https://github.com/spotify/web-api-auth-examples).
