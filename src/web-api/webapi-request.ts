@@ -1,4 +1,4 @@
-import { RequestBuilder } from '../request'
+import { RequestBuilder } from '../request/request'
 
 const apiScheme = 'https'
 const apiHost = 'api.spotify.com'

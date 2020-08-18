@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.webApiBuilder = void 0;
-var request_1 = require("../request");
+var request_1 = require("../request/request");
 var apiScheme = 'https';
 var apiHost = 'api.spotify.com';
 var apiPort = 443;

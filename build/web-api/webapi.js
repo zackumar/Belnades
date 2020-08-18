@@ -1,9 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.WebAPI = void 0;
 var webapi_request_1 = require("./webapi-request");
-var http_manager_1 = require("../http-manager");
-var WebApi = /** @class */ (function () {
-    function WebApi(accessToken) {
+var http_manager_1 = require("../request/http-manager");
+var WebAPI = /** @class */ (function () {
+    function WebAPI(accessToken) {
         this.accessToken = accessToken;
     }
     //Album API Endpoints
@@ -13,7 +14,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (market)
      * @param callback
      */
-    WebApi.prototype.getAlbum = function (albumId, options, callback) {
+    WebAPI.prototype.getAlbum = function (albumId, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/albums/" + albumId);
         if (options) {
             request.withQueryParameters(options);
@@ -26,7 +27,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (market)
      * @param callback
      */
-    WebApi.prototype.getAlbums = function (albumIds, options, callback) {
+    WebAPI.prototype.getAlbums = function (albumIds, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/albums');
         var ids = albumIds.join();
         request.withQueryParameters({ ids: ids });
@@ -41,7 +42,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (market, limit, offset)
      * @param callback
      */
-    WebApi.prototype.getAlbumsTracks = function (albumId, options, callback) {
+    WebAPI.prototype.getAlbumsTracks = function (albumId, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/albums/" + albumId + "/tracks");
         if (options) {
             request.withQueryParameters(options);
@@ -54,7 +55,7 @@ var WebApi = /** @class */ (function () {
      * @param artistId The Spotify ID for the artist.
      * @param callback
      */
-    WebApi.prototype.getArtist = function (artistId, callback) {
+    WebAPI.prototype.getArtist = function (artistId, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/artists/" + artistId);
         return request.build().execute(http_manager_1.get, callback);
     };
@@ -63,7 +64,7 @@ var WebApi = /** @class */ (function () {
      * @param artistIds A comma-separated list of the Spotify IDs for the artists. Maximum: 50 IDs.
      * @param callback
      */
-    WebApi.prototype.getArtists = function (artistIds, callback) {
+    WebAPI.prototype.getArtists = function (artistIds, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/artists');
         var ids = artistIds.join();
         request.withQueryParameters({ ids: ids });
@@ -75,7 +76,7 @@ var WebApi = /** @class */ (function () {
      * @param market An ISO 3166-1 alpha-2 market code or the string from_token.
      * @param callback
      */
-    WebApi.prototype.getArtistsTopTracks = function (artistId, market, callback) {
+    WebAPI.prototype.getArtistsTopTracks = function (artistId, market, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/artists/" + artistId + "/top-tracks");
         request.withQueryParameters({ market: market });
         return request.build().execute(http_manager_1.get, callback);
@@ -86,7 +87,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (include_groups, market, limit, offset)
      * @param callback
      */
-    WebApi.prototype.getArtistsAlbums = function (artistId, options, callback) {
+    WebAPI.prototype.getArtistsAlbums = function (artistId, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/artists/" + artistId + "/albums");
         if (options) {
             request.withQueryParameters(options);
@@ -98,7 +99,7 @@ var WebApi = /** @class */ (function () {
      * @param artistId The Spotify ID for the artist.
      * @param callback
      */
-    WebApi.prototype.getArtistsRelatedArtists = function (artistId, callback) {
+    WebAPI.prototype.getArtistsRelatedArtists = function (artistId, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/artists/" + artistId + "/related-artists");
         return request.build().execute(http_manager_1.get, callback);
     };
@@ -109,7 +110,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (market, locale)
      * @param callback
      */
-    WebApi.prototype.getCategory = function (categoryId, options, callback) {
+    WebAPI.prototype.getCategory = function (categoryId, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/browse/categories/" + categoryId);
         if (options) {
             request.withQueryParameters(options);
@@ -121,7 +122,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (market, locale, limit, offset)
      * @param callback
      */
-    WebApi.prototype.getCategories = function (options, callback) {
+    WebAPI.prototype.getCategories = function (options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/browse/categories');
         if (options) {
             request.withQueryParameters(options);
@@ -134,7 +135,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (market, limit, offset)
      * @param callback
      */
-    WebApi.prototype.getCategoryPlaylists = function (categoryId, options, callback) {
+    WebAPI.prototype.getCategoryPlaylists = function (categoryId, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/browse/categories/" + categoryId + "/playlists");
         if (options) {
             request.withQueryParameters(options);
@@ -146,7 +147,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (locale, market, timestamp, limit, offset)
      * @param callback
      */
-    WebApi.prototype.getFeaturedPlaylists = function (options, callback) {
+    WebAPI.prototype.getFeaturedPlaylists = function (options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/browse/featured-playlists');
         if (options) {
             request.withQueryParameters(options);
@@ -158,7 +159,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (market, limit, offset)
      * @param callback
      */
-    WebApi.prototype.getNewReleases = function (options, callback) {
+    WebAPI.prototype.getNewReleases = function (options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/browse/new-releases');
         if (options) {
             request.withQueryParameters(options);
@@ -170,7 +171,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. See {@link https://developer.spotify.com/documentation/web-api/reference/browse/get-recommendations/} for options.
      * @param callback
      */
-    WebApi.prototype.getRecommendations = function (options, callback) {
+    WebAPI.prototype.getRecommendations = function (options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/recommendations');
         if (options) {
             request.withQueryParameters(options);
@@ -181,7 +182,7 @@ var WebApi = /** @class */ (function () {
      * Retrieve a list of available genres seed parameter values for recommendations.
      * @param callback
      */
-    WebApi.prototype.getRecommendationGenres = function (callback) {
+    WebAPI.prototype.getRecommendationGenres = function (callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/recommendations/available-genre-seeds');
         return request.build().execute(http_manager_1.get, callback);
     };
@@ -192,7 +193,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (market)
      * @param callback
      */
-    WebApi.prototype.getEpisode = function (episodeId, options, callback) {
+    WebAPI.prototype.getEpisode = function (episodeId, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/episodes/" + episodeId);
         if (options) {
             request.withQueryParameters(options);
@@ -205,7 +206,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (market)
      * @param callback
      */
-    WebApi.prototype.getEpisodes = function (episodeIds, options, callback) {
+    WebAPI.prototype.getEpisodes = function (episodeIds, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/episodes');
         var ids = episodeIds.join();
         request.withQueryParameters({ ids: ids });
@@ -223,7 +224,7 @@ var WebApi = /** @class */ (function () {
      *                  A maximum of 50 IDs can be sent in one request.<br>
      * @param callback
      */
-    WebApi.prototype.getIsFollowingArtistOrUser = function (type, followIds, callback) {
+    WebAPI.prototype.getIsFollowingArtistOrUser = function (type, followIds, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/following/contains');
         var ids = followIds.join();
         request.withQueryParameters({
@@ -238,7 +239,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (limit, after)
      * @param callback
      */
-    WebApi.prototype.getFollowedArtistsOrUsers = function (type, options, callback) {
+    WebAPI.prototype.getFollowedArtistsOrUsers = function (type, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/following');
         request.withQueryParameters({ type: type });
         if (options) {
@@ -254,7 +255,7 @@ var WebApi = /** @class */ (function () {
      *                  A maximum of 50 IDs can be sent in one request.
      * @param callback
      */
-    WebApi.prototype.followArtistOrUser = function (type, followIds, callback) {
+    WebAPI.prototype.followArtistOrUser = function (type, followIds, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/following');
         var ids = followIds.join();
         request.withQueryParameters({
@@ -271,7 +272,7 @@ var WebApi = /** @class */ (function () {
      *                  A maximum of 50 IDs can be sent in one request.
      * @param callback
      */
-    WebApi.prototype.unfollowArtistOrUser = function (type, followIds, callback) {
+    WebAPI.prototype.unfollowArtistOrUser = function (type, followIds, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/following');
         var ids = followIds.join();
         request.withQueryParameters({
@@ -286,7 +287,7 @@ var WebApi = /** @class */ (function () {
      * @param userIds A comma-separated list of Spotify User IDs ; the ids of the users that you want to check to see if they follow the playlist. Maximum: 5 ids.
      * @param callback
      */
-    WebApi.prototype.getIsFollowingPlaylist = function (playlistId, userIds, callback) {
+    WebAPI.prototype.getIsFollowingPlaylist = function (playlistId, userIds, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/followers/contains");
         var ids = userIds.join();
         request.withQueryParameters({ ids: ids });
@@ -298,7 +299,7 @@ var WebApi = /** @class */ (function () {
      * @param isPublic Defaults to true. If true the playlist will be included in user’s public playlists, if false it will remain private. To be able to follow playlists privately, the user must have granted the playlist-modify-private scope.
      * @param callback
      */
-    WebApi.prototype.followPlaylist = function (playlistId, isPublic, callback) {
+    WebAPI.prototype.followPlaylist = function (playlistId, isPublic, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/followers");
         request.withBodyParameters({ public: isPublic });
         return request.build().execute(http_manager_1.put, callback);
@@ -308,7 +309,7 @@ var WebApi = /** @class */ (function () {
      * @param playlistId The Spotify ID of the playlist that is to be no longer followed.
      * @param callback
      */
-    WebApi.prototype.unfollowPlaylist = function (playlistId, callback) {
+    WebAPI.prototype.unfollowPlaylist = function (playlistId, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/followers");
         return request.build().execute(http_manager_1.del, callback);
     };
@@ -318,7 +319,7 @@ var WebApi = /** @class */ (function () {
      * @param albumIds A comma-separated list of the Spotify IDs for the albums. Maximum: 50 IDs.
      * @param callback
      */
-    WebApi.prototype.getIsAlbumsSaved = function (albumIds, callback) {
+    WebAPI.prototype.getIsAlbumsSaved = function (albumIds, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/albums/contains');
         var ids = albumIds.join();
         request.withQueryParameters({ ids: ids });
@@ -329,7 +330,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (limit, offset)
      * @param callback
      */
-    WebApi.prototype.getSavedAblums = function (options, callback) {
+    WebAPI.prototype.getSavedAblums = function (options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/albums');
         if (options) {
             request.withQueryParameters(options);
@@ -343,7 +344,7 @@ var WebApi = /** @class */ (function () {
      *                 Maximum: 50 IDs.
      * @param callback
      */
-    WebApi.prototype.saveAlbums = function (albumIds, callback) {
+    WebAPI.prototype.saveAlbums = function (albumIds, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/albums');
         var ids = albumIds.join();
         request.withQueryParameters({ ids: ids });
@@ -356,7 +357,7 @@ var WebApi = /** @class */ (function () {
      *                 Maximum: 50 IDs.
      * @param callback
      */
-    WebApi.prototype.removeSavedAlbums = function (albumIds, callback) {
+    WebAPI.prototype.removeSavedAlbums = function (albumIds, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/albums');
         var ids = albumIds.join();
         request.withQueryParameters({ ids: ids });
@@ -367,7 +368,7 @@ var WebApi = /** @class */ (function () {
      * @param showIds A comma-separated list of the Spotify IDs for the shows. Maximum: 50 ids.
      * @param callback
      */
-    WebApi.prototype.getIsShowsSaved = function (showIds, callback) {
+    WebAPI.prototype.getIsShowsSaved = function (showIds, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/shows/contains');
         var ids = showIds.join();
         request.withQueryParameters({ ids: ids });
@@ -378,7 +379,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (limit, offset)
      * @param callback
      */
-    WebApi.prototype.getSavedShows = function (options, callback) {
+    WebAPI.prototype.getSavedShows = function (options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/shows');
         if (options) {
             request.withQueryParameters(options);
@@ -390,7 +391,7 @@ var WebApi = /** @class */ (function () {
      * @param showIds A comma-separated list of Spotify IDs for the shows to be added to the user’s library.
      * @param callback
      */
-    WebApi.prototype.saveShows = function (showIds, callback) {
+    WebAPI.prototype.saveShows = function (showIds, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/shows');
         var ids = showIds.join();
         request.withQueryParameters({ ids: ids });
@@ -402,7 +403,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (market)
      * @param callback
      */
-    WebApi.prototype.removeSavedShows = function (showIds, options, callback) {
+    WebAPI.prototype.removeSavedShows = function (showIds, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/shows');
         var ids = showIds.join();
         request.withQueryParameters({ ids: ids });
@@ -416,7 +417,7 @@ var WebApi = /** @class */ (function () {
      * @param trackIds A comma-separated list of the Spotify IDs for the tracks. Maximum: 50 IDs.
      * @param callback
      */
-    WebApi.prototype.getIsTracksSaved = function (trackIds, callback) {
+    WebAPI.prototype.getIsTracksSaved = function (trackIds, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/tracks/contains');
         var ids = trackIds.join();
         request.withQueryParameters({ ids: ids });
@@ -427,7 +428,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (market, limit, offset)
      * @param callback
      */
-    WebApi.prototype.getSavedTracks = function (options, callback) {
+    WebAPI.prototype.getSavedTracks = function (options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/tracks');
         if (options) {
             request.withQueryParameters(options);
@@ -441,7 +442,7 @@ var WebApi = /** @class */ (function () {
      *                 Maximum: 50 IDs.
      * @param callback
      */
-    WebApi.prototype.saveTracks = function (trackIds, callback) {
+    WebAPI.prototype.saveTracks = function (trackIds, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/tracks');
         var ids = trackIds.join();
         request.withQueryParameters({ ids: ids });
@@ -454,7 +455,7 @@ var WebApi = /** @class */ (function () {
      *                 Maximum: 50 IDs.
      * @param callback
      */
-    WebApi.prototype.removeSavedTracks = function (trackIds, callback) {
+    WebAPI.prototype.removeSavedTracks = function (trackIds, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/tracks');
         var ids = trackIds.join();
         request.withQueryParameters({ ids: ids });
@@ -467,7 +468,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (limit, offset, time_range)
      * @param callback
      */
-    WebApi.prototype.getUsersTopTracksAndArtists = function (type, options, callback) {
+    WebAPI.prototype.getUsersTopTracksAndArtists = function (type, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/me/top/" + type);
         if (options) {
             request.withQueryParameters(options);
@@ -481,7 +482,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (device_id)
      * @param callback
      */
-    WebApi.prototype.addItemToQueue = function (uri, options, callback) {
+    WebAPI.prototype.addItemToQueue = function (uri, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/player/queue');
         request.withQueryParameters({ uri: uri });
         if (options) {
@@ -493,7 +494,7 @@ var WebApi = /** @class */ (function () {
      * Get information about a user’s available devices.
      * @param callback
      */
-    WebApi.prototype.getAvailableDevices = function (callback) {
+    WebAPI.prototype.getAvailableDevices = function (callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/player/devices');
         return request.build().execute(http_manager_1.get, callback);
     };
@@ -502,7 +503,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (market, additional_types)
      * @param callback
      */
-    WebApi.prototype.getCurrentPlaybackInfo = function (options, callback) {
+    WebAPI.prototype.getCurrentPlaybackInfo = function (options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/player');
         if (options) {
             request.withQueryParameters(options);
@@ -514,7 +515,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (limit, after, before)
      * @param callback
      */
-    WebApi.prototype.getRecentlyPlayedTracks = function (options, callback) {
+    WebAPI.prototype.getRecentlyPlayedTracks = function (options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/player/recently-played');
         if (options) {
             request.withQueryParameters(options);
@@ -526,7 +527,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (market, additional_types)
      * @param callback
      */
-    WebApi.prototype.getCurrentlyPlaying = function (options, callback) {
+    WebAPI.prototype.getCurrentlyPlaying = function (options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/player/currently-playing');
         if (options) {
             request.withQueryParameters(options);
@@ -538,7 +539,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (device_id)
      * @param callback
      */
-    WebApi.prototype.pausePlayback = function (options, callback) {
+    WebAPI.prototype.pausePlayback = function (options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/player/pause');
         if (options) {
             request.withQueryParameters(options);
@@ -551,7 +552,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (device_id)
      * @param callback
      */
-    WebApi.prototype.seekInPlayingTrack = function (positionMs, options, callback) {
+    WebAPI.prototype.seekInPlayingTrack = function (positionMs, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/player/seek');
         request.withQueryParameters({ position_ms: positionMs });
         if (options) {
@@ -568,7 +569,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (device_id)
      * @param callback
      */
-    WebApi.prototype.setRepeatState = function (state, options, callback) {
+    WebAPI.prototype.setRepeatState = function (state, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/player/repeat');
         request.withQueryParameters({ state: state });
         if (options) {
@@ -582,7 +583,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (device_id)
      * @param callback
      */
-    WebApi.prototype.setVolume = function (volume, options, callback) {
+    WebAPI.prototype.setVolume = function (volume, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/player/volume');
         request.withQueryParameters({ volume_percent: volume });
         if (options) {
@@ -595,7 +596,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (device_id)
      * @param callback
      */
-    WebApi.prototype.skipToNextPlayback = function (options, callback) {
+    WebAPI.prototype.skipToNextPlayback = function (options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/player/next');
         if (options) {
             request.withQueryParameters(options);
@@ -607,7 +608,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (device_id)
      * @param callback
      */
-    WebApi.prototype.skipToPreviousPlayback = function (options, callback) {
+    WebAPI.prototype.skipToPreviousPlayback = function (options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/player/previous');
         if (options) {
             request.withQueryParameters(options);
@@ -620,7 +621,7 @@ var WebApi = /** @class */ (function () {
      * @param bodyOptions Additional body parameters. See {@link https://developer.spotify.com/documentation/web-api/reference/player/start-a-users-playback/} for more info. (context_uri, uris, offset, position_ms)
      * @param callback
      */
-    WebApi.prototype.resumePlayback = function (queryOptions, bodyOptions, callback) {
+    WebAPI.prototype.resumePlayback = function (queryOptions, bodyOptions, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/player/play');
         if (queryOptions) {
             request.withQueryParameters(queryOptions);
@@ -637,7 +638,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (device_id)
      * @param callback
      */
-    WebApi.prototype.setShuffleState = function (state, options, callback) {
+    WebAPI.prototype.setShuffleState = function (state, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/player/shuffle');
         request.withQueryParameters({ state: state });
         if (options) {
@@ -653,7 +654,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional body parameters. (play)
      * @param callback
      */
-    WebApi.prototype.transferPlayback = function (deviceIds, options, callback) {
+    WebAPI.prototype.transferPlayback = function (deviceIds, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/player');
         request.withBodyParameters({ device_ids: deviceIds });
         if (options) {
@@ -668,7 +669,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (fields, market, additional_types)
      * @param callback
      */
-    WebApi.prototype.getPlaylist = function (playlistId, options, callback) {
+    WebAPI.prototype.getPlaylist = function (playlistId, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId);
         if (options) {
             request.withQueryParameters(options);
@@ -682,7 +683,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional body parameters. (public, collaborative, description)
      * @param callback
      */
-    WebApi.prototype.createPlaylist = function (userId, name, options, callback) {
+    WebAPI.prototype.createPlaylist = function (userId, name, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/users/" + userId + "/playlists");
         request.withBodyParameters({ name: name });
         if (options) {
@@ -695,7 +696,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (limit, offset)
      * @param callback
      */
-    WebApi.prototype.getCurrentUsersPlaylists = function (options, callback) {
+    WebAPI.prototype.getCurrentUsersPlaylists = function (options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me/playlists');
         if (options) {
             request.withQueryParameters(options);
@@ -708,7 +709,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (limit, offset)
      * @param callback
      */
-    WebApi.prototype.getUsersPlaylists = function (userId, options, callback) {
+    WebAPI.prototype.getUsersPlaylists = function (userId, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/users/" + userId + "/playlists");
         if (options) {
             request.withQueryParameters(options);
@@ -721,7 +722,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (fields, limit, offset, market, additional_types)
      * @param callback
      */
-    WebApi.prototype.getPlaylistItems = function (playlistId, options, callback) {
+    WebAPI.prototype.getPlaylistItems = function (playlistId, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/tracks");
         if (options) {
             request.withQueryParameters(options);
@@ -737,7 +738,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional body parameters. (position)
      * @param callback
      */
-    WebApi.prototype.addPlaylistItems = function (playlistId, uris, options, callback) {
+    WebAPI.prototype.addPlaylistItems = function (playlistId, uris, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/tracks");
         request.withBodyParameters({ uris: uris });
         if (options) {
@@ -751,7 +752,7 @@ var WebApi = /** @class */ (function () {
      * @param tracks Tracks to remove. See {@link https://developer.spotify.com/documentation/web-api/reference/playlists/remove-tracks-playlist/} for more information.
      * @param callback
      */
-    WebApi.prototype.removePlaylistItems = function (playlistId, tracks, callback) {
+    WebAPI.prototype.removePlaylistItems = function (playlistId, tracks, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/tracks");
         request.withBodyParameters(tracks);
         return request.build().execute(http_manager_1.del, callback);
@@ -763,7 +764,7 @@ var WebApi = /** @class */ (function () {
      *                See {@link https://developer.spotify.com/documentation/web-api/reference/playlists/change-playlist-details/} for more information.
      * @param callback
      */
-    WebApi.prototype.changePlaylistDetails = function (playlistId, options, callback) {
+    WebAPI.prototype.changePlaylistDetails = function (playlistId, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId);
         request.withBodyParameters(options);
         return request.build().execute(http_manager_1.put, callback);
@@ -774,7 +775,7 @@ var WebApi = /** @class */ (function () {
      * @param playlistId The Spotify ID for the playlist.
      * @param callback
      */
-    WebApi.prototype.getPlaylistCoverImage = function (playlistId, callback) {
+    WebAPI.prototype.getPlaylistCoverImage = function (playlistId, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/images");
         // TODO: Response body empty???
         return request.build().execute(http_manager_1.get, callback);
@@ -792,7 +793,7 @@ var WebApi = /** @class */ (function () {
      *              </pre>
      * @param callback
      */
-    WebApi.prototype.setPlaylistCoverImage = function (playlistId, image, callback) {
+    WebAPI.prototype.setPlaylistCoverImage = function (playlistId, image, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/images").withHeaders({ 'Content-Type': 'image/jpeg' });
         request.withBodyParameters({ image: image });
         return request.build().execute(http_manager_1.put, callback);
@@ -811,7 +812,7 @@ var WebApi = /** @class */ (function () {
      * @param options
      * @param callback
      */
-    WebApi.prototype.reorderPlaylistItems = function (playlistId, rangeStart, insertBefore, options, callback) {
+    WebAPI.prototype.reorderPlaylistItems = function (playlistId, rangeStart, insertBefore, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/tracks");
         request.withBodyParameters({
             range_start: rangeStart,
@@ -832,7 +833,7 @@ var WebApi = /** @class */ (function () {
      *              </pre>
      * @param callback
      */
-    WebApi.prototype.replacePlaylistItems = function (playlistId, uris, callback) {
+    WebAPI.prototype.replacePlaylistItems = function (playlistId, uris, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/playlists/" + playlistId + "/tracks");
         request.withBodyParameters({
             uris: uris,
@@ -851,7 +852,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (market, limit, offset, include_external)
      * @param callback
      */
-    WebApi.prototype.search = function (query, type, options, callback) {
+    WebAPI.prototype.search = function (query, type, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/search');
         request.withQueryParameters({
             q: query,
@@ -869,7 +870,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additonal query parameters. (market)
      * @param callback
      */
-    WebApi.prototype.getShow = function (showId, options, callback) {
+    WebAPI.prototype.getShow = function (showId, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/shows/" + showId);
         if (options) {
             request.withQueryParameters(options);
@@ -882,7 +883,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (market)
      * @param callback
      */
-    WebApi.prototype.getSeveralShows = function (showIds, options, callback) {
+    WebAPI.prototype.getSeveralShows = function (showIds, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/shows/');
         var ids = showIds.join();
         request.withQueryParameters({ ids: ids });
@@ -897,7 +898,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (market, limit, offset)
      * @param callback
      */
-    WebApi.prototype.getShowsEpisodes = function (showId, options, callback) {
+    WebAPI.prototype.getShowsEpisodes = function (showId, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/shows/" + showId + "/episodes");
         if (options) {
             request.withQueryParameters(options);
@@ -911,7 +912,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (market)
      * @param callback
      */
-    WebApi.prototype.getTrack = function (trackId, options, callback) {
+    WebAPI.prototype.getTrack = function (trackId, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/tracks/" + trackId);
         if (options) {
             request.withQueryParameters(options);
@@ -924,7 +925,7 @@ var WebApi = /** @class */ (function () {
      * @param options Additional query parameters. (market)
      * @param callback
      */
-    WebApi.prototype.getSeveralTracks = function (trackIds, options, callback) {
+    WebAPI.prototype.getSeveralTracks = function (trackIds, options, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/tracks/');
         var ids = trackIds.join();
         request.withQueryParameters({ ids: ids });
@@ -938,7 +939,7 @@ var WebApi = /** @class */ (function () {
      * @param trackId The Spotify ID for the track.
      * @param callback
      */
-    WebApi.prototype.getAudioAnalysisForTrack = function (trackId, callback) {
+    WebAPI.prototype.getAudioAnalysisForTrack = function (trackId, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/audio-analysis/" + trackId);
         return request.build().execute(http_manager_1.get, callback);
     };
@@ -947,7 +948,7 @@ var WebApi = /** @class */ (function () {
      * @param trackId The Spotify ID for the track.
      * @param callback
      */
-    WebApi.prototype.getAudioFeaturesForTrack = function (trackId, callback) {
+    WebAPI.prototype.getAudioFeaturesForTrack = function (trackId, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/audio-features/" + trackId);
         return request.build().execute(http_manager_1.get, callback);
     };
@@ -956,7 +957,7 @@ var WebApi = /** @class */ (function () {
      * @param trackIds A comma-separated list of the Spotify IDs for the tracks. Maximum: 100 IDs.
      * @param callback
      */
-    WebApi.prototype.getAudioFeaturesForSeveralTracks = function (trackIds, callback) {
+    WebAPI.prototype.getAudioFeaturesForSeveralTracks = function (trackIds, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/audio-features/');
         var ids = trackIds.join();
         request.withQueryParameters({ ids: ids });
@@ -967,7 +968,7 @@ var WebApi = /** @class */ (function () {
      * Get detailed profile information about the current user (including the current user’s username).
      * @param callback
      */
-    WebApi.prototype.getCurrentUserProfile = function (callback) {
+    WebAPI.prototype.getCurrentUserProfile = function (callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath('/v1/me');
         return request.build().execute(http_manager_1.get, callback);
     };
@@ -976,9 +977,10 @@ var WebApi = /** @class */ (function () {
      * @param userId The user’s Spotify user ID.
      * @param callback
      */
-    WebApi.prototype.getUserProfile = function (userId, callback) {
+    WebAPI.prototype.getUserProfile = function (userId, callback) {
         var request = webapi_request_1.webApiBuilder(this.accessToken).withPath("/v1/users/" + userId);
         return request.build().execute(http_manager_1.get, callback);
     };
-    return WebApi;
+    return WebAPI;
 }());
+exports.WebAPI = WebAPI;
