@@ -67,7 +67,7 @@
 				<a href="#belnades" id="belnades" style="color: inherit; text-decoration: none;">
 					<h1>Belnades</h1>
 				</a>
-				<p><img src="/images/logo.png" alt="Belnades Logo"></p>
+				<p><a href="https://github.com/zackumar/Belnades"><img src="https://github.com/zackumar/Belnades/blob/master/images/logo.png" alt="Belnades Logo"></a></p>
 				<p>Belnades is a Spotify API wrapper that runs on NodeJS, meant to be run client side without the need for a browser.</p>
 				<a href="#motivation" id="motivation" style="color: inherit; text-decoration: none;">
 					<h2>Motivation</h2>
@@ -92,13 +92,19 @@
 					<li><p>Wrapper to access all <a href="https://developer.spotify.com/documentation/web-api/reference-beta/">Spotify Web API endpoints</a></p>
 					</li>
 				</ul>
+				<a href="#what-i-want-to-add" id="what-i-want-to-add" style="color: inherit; text-decoration: none;">
+					<h3>What I want to add</h3>
+				</a>
+				<ul>
+					<li>Spotify Connect functionality</li>
+				</ul>
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
 					<h2>Installation</h2>
 				</a>
 				<p>Using npm:</p>
 				<pre><code class="language-bash">$ npm install belnades --save</code></pre>
-				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
-					<h2>Example</h2>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
 				</a>
 				<pre><code class="language-js"><span class="hljs-keyword">const</span> { WebAPI, AuthorizationCodeFlow, Scope } = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;belmont&#x27;</span>)
 
@@ -108,12 +114,11 @@
 <span class="hljs-comment">// Play music</span>
 <span class="hljs-keyword">async</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">playMusic</span>(<span class="hljs-params"></span>) </span>{
     <span class="hljs-keyword">try</span> {
-
         <span class="hljs-comment">//Authorize using the user-modified-playback-state scope</span>
         <span class="hljs-keyword">let</span> accessToken = <span class="hljs-keyword">await</span> authorization.authorize([Scope.USER_MODIFIED_PLAYBACK_STATE])
 
         <span class="hljs-comment">//Set access token of WebAPI</span>
-        webApi.setAccessToken(accessToken!)
+        webApi.setAccessToken(accessToken)
 
         <span class="hljs-comment">//Call API</span>
         <span class="hljs-keyword">await</span> webApi.resumePlayback()
@@ -123,6 +128,14 @@
 }
 
 playMusic()</code></pre>
+				<a href="#credit" id="credit" style="color: inherit; text-decoration: none;">
+					<h2>Credit</h2>
+				</a>
+				<p>Belnades is inspired by <a href="https://github.com/thelinmichael/spotify-web-api-node">Spotify Web API Node</a> and the lovely work put in by <a href="https://github.com/thelinmichael">thelinmichael</a>, <a href="https://github.com/JMPerez">JMPerez</a>, and its <a href="https://github.com/thelinmichael/spotify-web-api-node/network/members">contributors</a>. The authorization flows are based off of <a href="https://github.com/spotify/web-api-auth-examples">Spotify&#39;s Account Authentication Examples</a>.</p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p><a href="LICENSE">MIT</a></p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
