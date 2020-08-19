@@ -4,9 +4,15 @@
 
 Belnades is a Spotify API wrapper that runs on NodeJS, meant to be run client side without the need for a browser.
 
+[![time tracker](https://wakatime.com/badge/github/zackumar/Belnades.svg)](https://wakatime.com/badge/github/zackumar/Belnades)
+
 ## Motivation
 
-I started Belnades because of the limited amount of libraries available for the Spotify API in Javascript. Many of them are written for Python and C.
+I started Belnades because I wanted to make my own version of a Spotify CLI, but rather than using Rust, C, or Python, I wanted to use NodeJS and Typescript. There was a lack of Javascript libraries for the Spotify API, so I made my own. The goal is to be able to access the Spotify Web API and be able to be used as a Spotify Connect client.
+
+#### Why the name?
+
+The Spotify CLI that I wanted to make was going to be named Belmont. If you get the connection, let's be friends.
 
 ## Table of Contents
 
