@@ -1,6 +1,6 @@
 {
     "name": "belnades",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A Spotify API for NodeJS",
     "main": "index.js",
     "scripts": {
@@ -14,8 +14,12 @@
         "type": "git",
         "url": "git+https://github.com/zackumar/Belnades.git"
     },
-    "author": "",
-    "license": "ISC",
+    "keywords": [
+        "Spotify",
+        "Spotify Connect"
+    ],
+    "author": "Zack Umar",
+    "license": "MIT",
     "bugs": {
         "url": "https://github.com/zackumar/Belnades/issues"
     },
