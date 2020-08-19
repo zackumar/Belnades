@@ -14,6 +14,9 @@ I started Belnades because of the limited amount of libraries available for the 
 -   [Installation](#installation)
 -   [Usage](#usage)
 -   [Documentation](#documentation)
+-   [Dependencies](#dependencies)
+-   [Credit](#credit)
+-   [Lisence](#lisence)
 
 ## Features
 
@@ -64,6 +67,11 @@ playMusic()
 ## Documentation
 
 For documentation locally, you can view `index.html` in the `docs` folder. Or you can visit https://zackumar.github.io/Belnades/. Also check out Spotify's official documentation at https://developer.spotify.com/documentation/.
+
+## Dependencies
+
+-   [superagent](https://www.npmjs.com/package/superagent) - Used for requests. (May change for axios)
+-   [express](https://www.npmjs.com/package/express) - Used for authentication code flow.
 
 ## Credit
 
