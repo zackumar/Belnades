@@ -1,6 +1,6 @@
 {
     "name": "belnades",
-    "version": "0.9.0",
+    "version": "1.0.0",
     "description": "A Spotify API for NodeJS",
     "main": "index.js",
     "scripts": {
