@@ -72,3 +72,20 @@ interface Copyright {
     text: string
     type: string // C/P
 }
+
+interface Cursor {
+    after: string
+}
+
+interface Disallows {
+    interruptingPlayback: boolean
+    pausing: boolean
+    resuming: boolean
+    seeking: boolean
+    skippingNext: boolean
+    skippingBack: boolean
+    togglingRepeatContext: boolean
+    togglingShuffle: boolean
+    togglingRepeatTrack: boolean
+    transferingPlayback: boolean
+}
