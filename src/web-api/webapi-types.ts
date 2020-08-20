@@ -58,4 +58,12 @@ interface Category {
     href: string
     icons: APIImage[]
     id: string
+    name: string
+}
+
+interface Context {
+    type: string
+    href: string
+    externalUrls: ExternalUrls
+    uri: string
 }
