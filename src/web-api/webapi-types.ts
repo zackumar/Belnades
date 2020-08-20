@@ -67,3 +67,8 @@ interface Context {
     externalUrls: ExternalUrls
     uri: string
 }
+
+interface Copyright {
+    text: string
+    type: string // C/P
+}
