@@ -53,3 +53,9 @@ interface AudioFeatures {
     uri: string
     valence: number
 }
+
+interface Category {
+    href: string
+    icons: APIImage[]
+    id: string
+}
