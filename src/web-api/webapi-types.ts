@@ -3,8 +3,8 @@ interface Album {
     artists: Artist[]
     availableMarkets: string[]
     copyrights: Copyright[]
-    externalIds: ExternalIds
-    externalUrls: ExternalUrls
+    externalIds: ExternalId
+    externalUrls: ExternalUrl
     genres: string[]
     href: string
     id: string
@@ -21,7 +21,7 @@ interface Album {
 }
 
 interface Artist {
-    externalUrls: ExternalUrls
+    externalUrls: ExternalUrl
     followers: Followers
     genres: string[]
     href: string
@@ -64,7 +64,7 @@ interface Category {
 interface Context {
     type: string
     href: string
-    externalUrls: ExternalUrls
+    externalUrls: ExternalUrl
     uri: string
 }
 
@@ -88,4 +88,55 @@ interface Disallows {
     togglingShuffle: boolean
     togglingRepeatTrack: boolean
     transferingPlayback: boolean
+}
+
+interface Error {
+    status: number
+    message: string
+}
+
+interface PlayerError {
+    status: number
+    message: string
+    reason: string
+}
+
+interface ExternalId {
+    type: string
+    id: string
+}
+
+interface ExternalUrl {
+    type: string
+    url: string
+}
+
+interface Followers {
+    href: string
+    total: number
+}
+
+interface APIImage {
+    height: number
+    url: string
+    widht: number
+}
+
+interface Paging {
+    href: string
+    items: []
+    limit: number
+    next: string
+    offset: number
+    previous: string
+    total: number
+}
+
+interface CursorBasedPaging {
+    href: string
+    items: []
+    limit: number
+    next: string
+    cursors: Cursor
+    total: number
 }
