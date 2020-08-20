@@ -32,3 +32,24 @@ interface Artist {
     type: string
     uri: string
 }
+
+interface AudioFeatures {
+    acousticness: number
+    analysisUrl: string
+    danceability: number
+    durationMiliseconds: number
+    energy: number
+    id: string
+    instrumentalness: number
+    key: number //Pitch Class Notation,
+    liveness: number
+    loudness: number
+    mode: number
+    speechiness: number
+    tempo: number
+    timeSignature: number
+    trackHref: string
+    type: string
+    uri: string
+    valence: number
+}
