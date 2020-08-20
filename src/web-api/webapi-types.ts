@@ -19,3 +19,16 @@ interface Album {
     type: string
     uri: string
 }
+
+interface Artist {
+    externalUrls: ExternalUrls
+    followers: Followers
+    genres: string[]
+    href: string
+    id: string
+    images: APIImage[]
+    name: string
+    popularity: number
+    type: string
+    uri: string
+}
