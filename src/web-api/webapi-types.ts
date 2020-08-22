@@ -1,4 +1,6 @@
-interface Album {
+export interface Album {
+    interfaceType: 'album'
+
     albumType: string
     artists: Artist[]
     availableMarkets: string[]
@@ -20,7 +22,7 @@ interface Album {
     uri: string
 }
 
-interface Artist {
+export interface Artist {
     externalUrls: ExternalUrl
     followers: Followers
     genres: string[]
@@ -33,7 +35,7 @@ interface Artist {
     uri: string
 }
 
-interface AudioFeatures {
+export interface AudioFeatures {
     acousticness: number
     analysisUrl: string
     danceability: number
@@ -54,30 +56,30 @@ interface AudioFeatures {
     valence: number
 }
 
-interface Category {
+export interface Category {
     href: string
     icons: APIImage[]
     id: string
     name: string
 }
 
-interface Context {
+export interface Context {
     type: string
     href: string
     externalUrls: ExternalUrl
     uri: string
 }
 
-interface Copyright {
+export interface Copyright {
     text: string
     type: string // C/P
 }
 
-interface Cursor {
+export interface Cursor {
     after: string
 }
 
-interface Disallows {
+export interface Disallows {
     interruptingPlayback: boolean
     pausing: boolean
     resuming: boolean
@@ -90,39 +92,39 @@ interface Disallows {
     transferingPlayback: boolean
 }
 
-interface Error {
+export interface Error {
     status: number
     message: string
 }
 
-interface PlayerError {
+export interface PlayerError {
     status: number
     message: string
     reason: string
 }
 
-interface ExternalId {
+export interface ExternalId {
     type: string
     id: string
 }
 
-interface ExternalUrl {
+export interface ExternalUrl {
     type: string
     url: string
 }
 
-interface Followers {
+export interface Followers {
     href: string
     total: number
 }
 
-interface APIImage {
+export interface APIImage {
     height: number
     url: string
     widht: number
 }
 
-interface Paging {
+export interface Paging {
     href: string
     items: []
     limit: number
@@ -132,7 +134,7 @@ interface Paging {
     total: number
 }
 
-interface CursorBasedPaging {
+export interface CursorBasedPaging {
     href: string
     items: []
     limit: number
@@ -141,13 +143,13 @@ interface CursorBasedPaging {
     total: number
 }
 
-interface PlayHistory {
+export interface PlayHistory {
     track: Track
     playedAt: Date //Timestamp
     context: Context
 }
 
-interface Playlist {
+export interface Playlist {
     collaborative: boolean
     description: string | undefined
     externalUrls: ExternalUrl
@@ -164,19 +166,19 @@ interface Playlist {
     uri: string
 }
 
-interface PlaylistTrack {
+export interface PlaylistTrack {
     addedAt: Date //timestamp
     addedBy: User
     isLocal: boolean
     track: Track | Episode
 }
 
-interface Recommendations {
+export interface Recommendations {
     seeds: RecommendationsSeed[]
     tracks: Track[]
 }
 
-interface RecommendationsSeed {
+export interface RecommendationsSeed {
     afterFilteringSize: number
     afterRelinkingSize: number
     href: string
@@ -185,26 +187,26 @@ interface RecommendationsSeed {
     type: string
 }
 
-interface Restrictions {
+export interface Restrictions {
     reason: string
 }
 
-interface SavedTrack {
+export interface SavedTrack {
     addedAt: Date //Timestamp
     track: Track
 }
 
-interface SavedAlbum {
+export interface SavedAlbum {
     addedAt: Date //Timestamp
     album: Album
 }
 
-interface SavedShow {
+export interface SavedShow {
     addedAt: Date //Timestamp
     show: Show
 }
 
-interface Track {
+export interface Track {
     album: Album
     artist: Artist[]
     availableMarkets: string[]
@@ -227,7 +229,7 @@ interface Track {
     isLocal: boolean
 }
 
-interface TrackLink {
+export interface TrackLink {
     externalUrls: ExternalUrl
     href: string
     id: string
@@ -235,7 +237,7 @@ interface TrackLink {
     uri: string
 }
 
-interface Episode {
+export interface Episode {
     audioPreviewUrl: string
     description: string
     durationMiliseconds: number
@@ -256,12 +258,12 @@ interface Episode {
     uri: string
 }
 
-interface ResumePoint {
+export interface ResumePoint {
     fullyPlayed: boolean
     resumePositionMiliseconds: number
 }
 
-interface Show {
+export interface Show {
     availableMarkets: string[]
     copyrights: Copyright[]
     description: string
@@ -280,7 +282,7 @@ interface Show {
     uri: string
 }
 
-interface User {
+export interface User {
     country: string
     displayName: string
     email: string
