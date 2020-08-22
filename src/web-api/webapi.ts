@@ -1,7 +1,7 @@
 import { webApiBuilder } from './webapi-request'
 import { get, post, put, del } from '../request/http-manager'
 
-export class WebAPI {
+export default class WebAPI {
     private accessToken!: string
 
     constructor(accessToken?: string) {
